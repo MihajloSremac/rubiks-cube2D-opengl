@@ -530,42 +530,42 @@ void UpdateValueU(float& xcube, float& ycube) {
 		xcube -= 0.35;
 	//Gornji desni cosak
 	if (xcube > -0.1 && xcube < 0.01 && ycube < 0.46 && ycube > 0.36)
-		ycube -= 0.2;
+		ycube = 0.25;
 
-	//Desna ivica ??
+	//Desna ivica
 	else if (xcube > -0.1 && xcube < 0.01 && ycube < 0.36 && ycube > 0.26) {
-		ycube -= 0.1;
-		xcube -= 0.1;
+		ycube = 0.25;
+		xcube = -0.1;
 	}
 
 	//Donji desni cosak
 	else if (xcube > -0.1 && xcube < 0.01 && ycube < 0.26 && ycube > 0.16)
-		xcube -= 0.2;
+		xcube = -0.2;
 
 	//Donja ivica
 	else if (xcube > -0.2 && xcube < -0.09 && ycube < 0.26 && ycube > 0.16) {
-		ycube += 0.1;
-		xcube -= 0.1;
+		ycube = 0.35;
+		xcube = -0.2;
 	}
 
 	////Donji levi cosak
 	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.26 && ycube > 0.16)
-		ycube += 0.2;
+		ycube = 0.45;
 
 	////Leva ivica
 	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.36 && ycube > 0.26) {
-		ycube += 0.1;
-		xcube += 0.1;
+		ycube = 0.45;
+		xcube = -0.1;
 	}
 
 	////Gornji levi cosak
 	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.46 && ycube > 0.36)
-		xcube += 0.2;
+		xcube = 0.0;
 
 	//Gornja ivica
-	else if (xcube > -0.2 && xcube < 0.11 && ycube < 0.46 && ycube > 0.36) {
-		ycube -= 0.1;
-		xcube += 0.1;
+	else if (xcube > -0.2 && xcube < -0.09 && ycube < 0.46 && ycube > 0.36) {
+		ycube = 0.35;
+		xcube = 0.0;
 	}
 
 }
@@ -578,42 +578,42 @@ void UpdateValueUPrime(float& xcube, float& ycube) {
 
 	//Gornji desni cosak
 	if (xcube > -0.1 && xcube < 0.01 && ycube < 0.46 && ycube > 0.36)
-		xcube -= 0.2;
+		xcube = -0.2;
 
-	//Desna ivica ??
+	//Desna ivica 
 	else if (xcube > -0.1 && xcube < 0.01 && ycube < 0.36 && ycube > 0.26) {
-		ycube += 0.1;
-		xcube -= 0.1;
+		ycube = 0.45;
+		xcube = -0.1;
 	}
 
 	//Donji desni cosak
 	else if (xcube > -0.1 && xcube < 0.01 && ycube < 0.26 && ycube > 0.16)
-		ycube += 0.2;
+		ycube = 0.45;
 
 	//Donja ivica
 	else if (xcube > -0.2 && xcube < -0.09 && ycube < 0.26 && ycube > 0.16) {
-		ycube += 0.1;
-		xcube += 0.1;
+		ycube = 0.35;
+		xcube = 0.0;
 	}
 
 	////Donji levi cosak
 	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.26 && ycube > 0.16)
-		xcube += 0.2;
+		xcube = 0.0;
 
 	////Leva ivica
 	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.36 && ycube > 0.26) {
-		ycube -= 0.1;
-		xcube += 0.1;
+		ycube = 0.25;
+		xcube = -0.1;
 	}
 
 	////Gornji levi cosak
 	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.46 && ycube > 0.36)
-		ycube -= 0.2;
+		ycube = 0.25;
 
 	//Gornja ivica
-	else if (xcube > -0.2 && xcube < 0.11 && ycube < 0.46 && ycube > 0.36) {
-		ycube -= 0.1;
-		xcube -= 0.1;
+	else if (xcube > -0.2 && xcube < -0.09 && ycube < 0.46 && ycube > 0.36) {
+		ycube = 0.35;
+		xcube = -0.2;
 	}
 }
 
