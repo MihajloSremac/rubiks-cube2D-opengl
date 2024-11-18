@@ -386,6 +386,46 @@ void UpdateValueU(float& xcube, float& ycube) {
 		xcube += 1.05;
 	else if (ycube > 0.05 && ycube < 0.15)
 		xcube -= 0.35;
+	//Gornji desni cosak
+	if (xcube > -0.1 && xcube < 0.01 && ycube < 0.46 && ycube > 0.36)
+		ycube -= 0.2;
+
+	//Desna ivica ??
+	else if (xcube > -0.1 && xcube < 0.01 && ycube < 0.36 && ycube > 0.26) {
+		ycube -= 0.1;
+		xcube -= 0.1;
+	}
+
+	//Donji desni cosak
+	else if (xcube > -0.1 && xcube < 0.01 && ycube < 0.26 && ycube > 0.16)
+		xcube -= 0.2;
+
+	//Donja ivica
+	else if (xcube > -0.2 && xcube < -0.09 && ycube < 0.26 && ycube > 0.16) {
+		ycube += 0.1;
+		xcube -= 0.1;
+	}
+
+	////Donji levi cosak
+	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.26 && ycube > 0.16)
+		ycube += 0.2;
+
+	////Leva ivica
+	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.36 && ycube > 0.26) {
+		ycube += 0.1;
+		xcube += 0.1;
+	}
+
+	////Gornji levi cosak
+	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.46 && ycube > 0.36)
+		xcube += 0.2;
+
+	//Gornja ivica
+	else if (xcube > -0.2 && xcube < 0.11 && ycube < 0.46 && ycube > 0.36) {
+		ycube -= 0.1;
+		xcube += 0.1;
+	}
+
 }
 
 void UpdateValueUPrime(float& xcube, float& ycube) {
@@ -393,6 +433,46 @@ void UpdateValueUPrime(float& xcube, float& ycube) {
 		xcube -= 1.05;
 	else if (ycube > 0.05 && ycube < 0.15)
 		xcube += 0.35;
+
+	//Gornji desni cosak
+	if (xcube > -0.1 && xcube < 0.01 && ycube < 0.46 && ycube > 0.36)
+		xcube -= 0.2;
+
+	//Desna ivica ??
+	else if (xcube > -0.1 && xcube < 0.01 && ycube < 0.36 && ycube > 0.26) {
+		ycube += 0.1;
+		xcube -= 0.1;
+	}
+
+	//Donji desni cosak
+	else if (xcube > -0.1 && xcube < 0.01 && ycube < 0.26 && ycube > 0.16)
+		ycube += 0.2;
+
+	//Donja ivica
+	else if (xcube > -0.2 && xcube < -0.09 && ycube < 0.26 && ycube > 0.16) {
+		ycube += 0.1;
+		xcube += 0.1;
+	}
+
+	////Donji levi cosak
+	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.26 && ycube > 0.16)
+		xcube += 0.2;
+
+	////Leva ivica
+	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.36 && ycube > 0.26) {
+		ycube -= 0.1;
+		xcube += 0.1;
+	}
+
+	////Gornji levi cosak
+	else if (xcube > -0.3 && xcube < -0.19 && ycube < 0.46 && ycube > 0.36)
+		ycube -= 0.2;
+
+	//Gornja ivica
+	else if (xcube > -0.2 && xcube < 0.11 && ycube < 0.46 && ycube > 0.36) {
+		ycube -= 0.1;
+		xcube -= 0.1;
+	}
 }
 
 unsigned int compileShader(GLenum type, const char* source) {
