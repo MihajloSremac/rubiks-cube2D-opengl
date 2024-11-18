@@ -33,149 +33,8 @@ bool rightArrowPressed = false; // Praćenje desne strelice
 bool upArrowTriggered = false; // Praćenje redosleda za strelicu gore
 bool downArrowTriggered = false; // Praćenje redosleda za strelicu dole
 
-float ycube1 = 0.45;
-float xcube1 = 0.0;
-
-float ycube2 = 0.35;
-float xcube2 = 0.0;
-
-float ycube3 = 0.25;
-float xcube3 = 0.0;
-
-float ycube4 = 0.1;
-float xcube4 = 0.0;
-
-float ycube5 = 0.0;
-float xcube5 = 0.0;
-
-float ycube6 = -0.1;
-float xcube6 = 0.0;
-
-float ycube7 = -0.25;
-float xcube7 = 0.0;
-
-float ycube8 = -0.35;
-float xcube8 = 0.0;
-
-float ycube9 = -0.45;
-float xcube9 = 0.0;
-
-float ycube10 = 0.1;
-float xcube10 = 0.15;
-
-float ycube11 = 0.0;
-float xcube11 = 0.15;
-
-float ycube12 = -0.1;
-float xcube12 = 0.15;
-
-float ycube13 = 0.1;
-float xcube13 = 0.25;
-
-float ycube14 = -0.1;
-float xcube14 = 0.25;
-
-float ycube15 = 0.1;
-float xcube15 = 0.35;
-
-float ycube16 = 0.0;
-float xcube16 = 0.35;
-
-float ycube17 = -0.1;
-float xcube17 = 0.35;
-
-float ycube18 = 0.1;
-float xcube18 = 0.50;
-
-float ycube19 = 0.0;
-float xcube19 = 0.50;
-
-float ycube20 = -0.1;
-float xcube20 = 0.50;
-
-float ycube21 = 0.1;
-float xcube21 = 0.60;
-
-float ycube22 = -0.1;
-float xcube22 = 0.60;
-
-float ycube23 = 0.1;
-float xcube23 = 0.70;
-
-float ycube24 = 0.0;
-float xcube24 = 0.70;
-
-float ycube25 = -0.1;
-float xcube25 = 0.70;
-
-float ycube26 = 0.1;
-float xcube26 = -0.55;
-
-float ycube27 = 0.0;
-float xcube27 = -0.55;
-
-float ycube28 = -0.1;
-float xcube28 = -0.55;
-
-float ycube29 = 0.1;
-float xcube29 = -0.45;
-
-float ycube30 = -0.1;
-float xcube30 = -0.45;
-
-float ycube31 = 0.1;
-float xcube31 = -0.35;
-
-float ycube32 = 0.0;
-float xcube32 = -0.35;
-
-float ycube33 = -0.1;
-float xcube33 = -0.35;
-
-float ycube34 = 0.45;
-float xcube34 = -0.2;
-
-float ycube35 = 0.35;
-float xcube35 = -0.2;
-
-float ycube36 = 0.25;
-float xcube36 = -0.2;
-
-float ycube37 = 0.1;
-float xcube37 = -0.2;
-
-float ycube38 = 0.0;
-float xcube38 = -0.2;
-
-float ycube39 = -0.1;
-float xcube39 = -0.2;
-
-float ycube40 = -0.25;
-float xcube40 = -0.2;
-
-float ycube41 = -0.35;
-float xcube41 = -0.2;
-
-float ycube42 = -0.45;
-float xcube42 = -0.2;
-
-float ycube43 = 0.45;
-float xcube43 = -0.1;
-
-float ycube44 = 0.25;
-float xcube44 = -0.1;
-
-float ycube45 = 0.1;
-float xcube45 = -0.1;
-
-float ycube46 = -0.1;
-float xcube46 = -0.1;
-
-float ycube47 = -0.25;
-float xcube47 = -0.1;
-
-float ycube48 = -0.45;
-float xcube48 = -0.1;
+float xcube[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.15, 0.15, 0.15, 0.25, 0.25, 0.35, 0.35, 0.35, 0.50, 0.50, 0.50, 0.60, 0.60, 0.70, 0.70, 0.70, -0.55, -0.55, -0.55, -0.45, -0.45, -0.35, -0.35, -0.35, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1};
+float ycube[] = {0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.45, 0.25, 0.1, -0.1, -0.25, -0.45};
 
 int main(void)
 {
@@ -255,7 +114,7 @@ int main(void)
 	};
 
 	//POMERIVI KVADRATI
-	//Svaki kvadrat je jedinstven i imace svoju vrednost od 1-54, a ja cu ih cuvati kod mene na papiru ili pdfu zarad boljeg razumevanja
+	//Svaki kvadrat je jedinstven i imace svoje neke kordinate sa xcubeBroj i ycubeBroj od 1-54
 	float cubeRow11121White[] = {
 		-0.125, 0.05,       1.0, 1.0, 1.0, 1.0,
 		-0.125, -0.05,       1.0, 1.0, 1.0, 1.0,
@@ -398,54 +257,40 @@ int main(void)
 		}
 		{
 			//pokretljive stranice
-			RenderCube(uPosLoc, xcube1, ycube1, VAO[6], cubeRow11121White, 96, stride);
-			RenderCube(uPosLoc, xcube2, ycube2, VAO[7], cubeRow11121White, 96, stride);
-			RenderCube(uPosLoc, xcube3, ycube3, VAO[8], cubeRow11121White, 96, stride);
-			RenderCube(uPosLoc, xcube4, ycube4, VAO[9], cubeRow11121Green, 96, stride);
-			RenderCube(uPosLoc, xcube5, ycube5, VAO[10], cubeRow11121Green, 96, stride);
-			RenderCube(uPosLoc, xcube6, ycube6, VAO[11], cubeRow11121Green, 96, stride);
-			RenderCube(uPosLoc, xcube7, ycube7, VAO[12], cubeRow11121Yellow, 96, stride);
-			RenderCube(uPosLoc, xcube8, ycube8, VAO[13], cubeRow11121Yellow, 96, stride);
-			RenderCube(uPosLoc, xcube9, ycube9, VAO[14], cubeRow11121Yellow, 96, stride);
-			RenderCube(uPosLoc, xcube10, ycube10, VAO[15], cubeRow234Red, 96, stride);
-			RenderCube(uPosLoc, xcube11, ycube11, VAO[16], cubeRow234Red, 96, stride);
-			RenderCube(uPosLoc, xcube12, ycube12, VAO[17], cubeRow234Red, 96, stride);
-			RenderCube(uPosLoc, xcube13, ycube13, VAO[18], cubeRow234Red, 96, stride);
-			RenderCube(uPosLoc, xcube14, ycube14, VAO[19], cubeRow234Red, 96, stride);
-			RenderCube(uPosLoc, xcube15, ycube15, VAO[20], cubeRow234Red, 96, stride);
-			RenderCube(uPosLoc, xcube16, ycube16, VAO[21], cubeRow234Red, 96, stride);
-			RenderCube(uPosLoc, xcube17, ycube17, VAO[22], cubeRow234Red, 96, stride);
-			RenderCube(uPosLoc, xcube18, ycube18, VAO[23], cubeRow567Blue, 96, stride);
-			RenderCube(uPosLoc, xcube19, ycube19, VAO[24], cubeRow567Blue, 96, stride);
-			RenderCube(uPosLoc, xcube20, ycube20, VAO[25], cubeRow567Blue, 96, stride);
-			RenderCube(uPosLoc, xcube21, ycube21, VAO[26], cubeRow567Blue, 96, stride);
-			RenderCube(uPosLoc, xcube22, ycube22, VAO[27], cubeRow567Blue, 96, stride);
-			RenderCube(uPosLoc, xcube23, ycube23, VAO[28], cubeRow567Blue, 96, stride);
-			RenderCube(uPosLoc, xcube24, ycube24, VAO[29], cubeRow567Blue, 96, stride);
-			RenderCube(uPosLoc, xcube25, ycube25, VAO[30], cubeRow567Blue, 96, stride);
-			RenderCube(uPosLoc, xcube26, ycube26, VAO[31], cubeRow8910Orange, 96, stride);
-			RenderCube(uPosLoc, xcube27, ycube27, VAO[32], cubeRow8910Orange, 96, stride);
-			RenderCube(uPosLoc, xcube28, ycube28, VAO[33], cubeRow8910Orange, 96, stride);
-			RenderCube(uPosLoc, xcube29, ycube29, VAO[34], cubeRow8910Orange, 96, stride);
-			RenderCube(uPosLoc, xcube30, ycube30, VAO[35], cubeRow8910Orange, 96, stride);
-			RenderCube(uPosLoc, xcube31, ycube31, VAO[36], cubeRow8910Orange, 96, stride);
-			RenderCube(uPosLoc, xcube32, ycube32, VAO[37], cubeRow8910Orange, 96, stride);
-			RenderCube(uPosLoc, xcube33, ycube33, VAO[38], cubeRow8910Orange, 96, stride);
-			RenderCube(uPosLoc, xcube34, ycube34, VAO[39], cubeRow11121White, 96, stride);
-			RenderCube(uPosLoc, xcube35, ycube35, VAO[40], cubeRow11121White, 96, stride);
-			RenderCube(uPosLoc, xcube36, ycube36, VAO[41], cubeRow11121White, 96, stride);
-			RenderCube(uPosLoc, xcube37, ycube37, VAO[42], cubeRow11121Green, 96, stride);
-			RenderCube(uPosLoc, xcube38, ycube38, VAO[43], cubeRow11121Green, 96, stride);
-			RenderCube(uPosLoc, xcube39, ycube39, VAO[44], cubeRow11121Green, 96, stride);
-			RenderCube(uPosLoc, xcube40, ycube40, VAO[45], cubeRow11121Yellow, 96, stride);
-			RenderCube(uPosLoc, xcube41, ycube41, VAO[46], cubeRow11121Yellow, 96, stride);
-			RenderCube(uPosLoc, xcube42, ycube42, VAO[47], cubeRow11121Yellow, 96, stride);
-			RenderCube(uPosLoc, xcube43, ycube43, VAO[48], cubeRow11121White, 96, stride);
-			RenderCube(uPosLoc, xcube44, ycube44, VAO[49], cubeRow11121White, 96, stride);
-			RenderCube(uPosLoc, xcube45, ycube45, VAO[50], cubeRow11121Green, 96, stride);
-			RenderCube(uPosLoc, xcube46, ycube46, VAO[51], cubeRow11121Green, 96, stride);
-			RenderCube(uPosLoc, xcube47, ycube47, VAO[52], cubeRow11121Yellow, 96, stride);
-			RenderCube(uPosLoc, xcube48, ycube48, VAO[53], cubeRow11121Yellow, 96, stride);
+			// First row of cubes (white)
+			for (int i = 0; i < 9; ++i) {
+				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121White, 96, stride);
+			}
+
+			// Second row of cubes (green)
+			for (int i = 9; i < 15; ++i) {
+				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121Green, 96, stride);
+			}
+
+			// Third row of cubes (yellow)
+			for (int i = 15; i < 21; ++i) {
+				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121Yellow, 96, stride);
+			}
+
+			// Fourth row of cubes (red)
+			for (int i = 21; i < 28; ++i) {
+				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow234Red, 96, stride);
+			}
+
+			// Fifth row of cubes (blue)
+			for (int i = 28; i < 35; ++i) {
+				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow567Blue, 96, stride);
+			}
+
+			// Sixth row of cubes (orange)
+			for (int i = 35; i < 42; ++i) {
+				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow8910Orange, 96, stride);
+			}
+
+			// Seventh row of cubes (white)
+			for (int i = 42; i < 48; ++i) {
+				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121White, 96, stride);
+			}
 		}
 
 
@@ -474,9 +319,12 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		else if (action == GLFW_RELEASE && rKeyPressed)
 		{
 
-			UpdateValueR(xcube1, ycube1);
+			/*UpdateValueR(xcube1, ycube1);
 			UpdateValueR(xcube2, ycube2);
-			UpdateValueR(xcube3, ycube3);
+			UpdateValueR(xcube3, ycube3);*/
+
+			for (int i = 0; i < 48; i++)
+				UpdateValueR(xcube[i], ycube[i]);
 
 			rKeyPressed = false;
 		}
@@ -490,9 +338,8 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		else if (action == GLFW_RELEASE && uKeyPressed)
 		{
 
-			UpdateValueU(xcube1, ycube1);
-			UpdateValueU(xcube2, ycube2);
-			UpdateValueU(xcube3, ycube3);
+			for (int i = 0; i < 48; i++)
+				UpdateValueU(xcube[i], ycube[i]);
 
 			uKeyPressed = false;
 		}
@@ -506,9 +353,8 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		else if (action == GLFW_RELEASE && tKeyPressed)
 		{
 
-			UpdateValueRPrime(xcube1, ycube1);
-			UpdateValueRPrime(xcube2, ycube2);
-			UpdateValueRPrime(xcube3, ycube3);
+			for (int i = 0; i < 48; i++)
+				UpdateValueRPrime(xcube[i], ycube[i]);
 
 			tKeyPressed = false;
 		}
@@ -522,9 +368,8 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		else if (action == GLFW_RELEASE && iKeyPressed)
 		{
 
-			UpdateValueUPrime(xcube1, ycube1);
-			UpdateValueUPrime(xcube2, ycube2);
-			UpdateValueUPrime(xcube3, ycube3);
+			for (int i = 0; i < 48; i++)
+				UpdateValueUPrime(xcube[i], ycube[i]);
 
 			iKeyPressed = false;
 		}
@@ -533,31 +378,31 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 
 
 void UpdateValueR(float& xcube, float& ycube) {
-	if (ycube < 0.2 && xcube == 0)
-		ycube += 0.2;
-	else if (ycube > 0.2 && xcube == 0)
-		ycube = -0.2;
+	if (ycube + 0.34 >= 0.45 && xcube < 0.01 && xcube > -0.01)		
+		ycube -= 0.7;		
+	else if(xcube < 0.01 && xcube > -0.01)
+		ycube += 0.35;
 }
 
 void UpdateValueRPrime(float& xcube, float& ycube) {
-	if (ycube > -0.2 && xcube == 0)
-		ycube -= 0.2;
-	else if (ycube < -0.2 && xcube == 0)
-		ycube = 0.2;
+	if (ycube - 0.34 <= -0.45 && xcube < 0.01 && xcube > -0.01)
+		ycube += 0.7;
+	else if (xcube < 0.01 && xcube > -0.01)
+		ycube -= 0.35;
 }
 
 void UpdateValueU(float& xcube, float& ycube) {
-	if (xcube > -0.4 && ycube > 0.2)
-		xcube -= 0.2f;
-	else if (xcube < -0.4 && ycube > 0.2)
-		xcube = 0.0;
+	if (xcube + -0.34 < -0.55 && ycube > 0.05 && ycube< 0.15)
+		xcube += 1.05;
+	else if (ycube > 0.05 && ycube < 0.15)
+		xcube -= 0.35;
 }
 
 void UpdateValueUPrime(float& xcube, float& ycube) {
-	if (xcube < 0 && ycube > 0.2)
-		xcube += 0.2f;
-	else if (xcube == 0.0 && ycube > 0.2)
-		xcube = -0.4;
+	if (xcube + 0.34 > 0.7 && ycube > 0.05 && ycube < 0.15)
+		xcube -= 1.05;
+	else if (ycube > 0.05 && ycube < 0.15)
+		xcube += 0.35;
 }
 
 unsigned int compileShader(GLenum type, const char* source) {
