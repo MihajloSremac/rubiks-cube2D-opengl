@@ -21,9 +21,6 @@
     <ClCompile Include="RubiksCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="2DCube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -33,10 +30,5 @@
     <None Include="basic.frag">
       <Filter>Source Files\Shader Files</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="2DCube.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
