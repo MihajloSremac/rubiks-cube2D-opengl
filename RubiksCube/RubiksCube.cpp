@@ -257,37 +257,30 @@ int main(void)
 		}
 		{
 			//pokretljive stranice
-			// First row of cubes (white)
 			for (int i = 0; i < 9; ++i) {
 				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121White, 96, stride);
 			}
 
-			// Second row of cubes (green)
 			for (int i = 9; i < 15; ++i) {
 				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121Green, 96, stride);
 			}
 
-			// Third row of cubes (yellow)
 			for (int i = 15; i < 21; ++i) {
 				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121Yellow, 96, stride);
 			}
 
-			// Fourth row of cubes (red)
 			for (int i = 21; i < 28; ++i) {
 				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow234Red, 96, stride);
 			}
 
-			// Fifth row of cubes (blue)
 			for (int i = 28; i < 35; ++i) {
 				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow567Blue, 96, stride);
 			}
 
-			// Sixth row of cubes (orange)
 			for (int i = 35; i < 42; ++i) {
 				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow8910Orange, 96, stride);
 			}
 
-			// Seventh row of cubes (white)
 			for (int i = 42; i < 48; ++i) {
 				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121White, 96, stride);
 			}
@@ -319,9 +312,6 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		else if (action == GLFW_RELEASE && rKeyPressed)
 		{
 
-			/*UpdateValueR(xcube1, ycube1);
-			UpdateValueR(xcube2, ycube2);
-			UpdateValueR(xcube3, ycube3);*/
 
 			for (int i = 0; i < 48; i++)
 				UpdateValueR(xcube[i], ycube[i]);
