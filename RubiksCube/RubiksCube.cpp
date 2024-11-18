@@ -33,8 +33,8 @@ bool rightArrowPressed = false; // Praćenje desne strelice
 bool upArrowTriggered = false; // Praćenje redosleda za strelicu gore
 bool downArrowTriggered = false; // Praćenje redosleda za strelicu dole
 
-float xcube[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.15, 0.15, 0.15, 0.25, 0.25, 0.35, 0.35, 0.35, 0.50, 0.50, 0.50, 0.60, 0.60, 0.70, 0.70, 0.70, -0.55, -0.55, -0.55, -0.45, -0.45, -0.35, -0.35, -0.35, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1};
-float ycube[] = {0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.45, 0.25, 0.1, -0.1, -0.25, -0.45};
+float xcube[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.15, 0.15, 0.15, 0.25, 0.25, 0.35, 0.35, 0.35, 0.50, 0.50, 0.50, 0.60, 0.60, 0.70, 0.70, 0.70, -0.55, -0.55, -0.55, -0.45, -0.45, -0.35, -0.35, -0.35, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1 };
+float ycube[] = { 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.45, 0.25, 0.1, -0.1, -0.25, -0.45 };
 
 int main(void)
 {
@@ -255,37 +255,35 @@ int main(void)
 			RenderCube(uPosLoc, 0, 0, VAO[4], whiteCenter, 96, stride);
 			RenderCube(uPosLoc, 0, 0, VAO[5], yellowCenter, 96, stride);
 		}
-		{
-			//pokretljive stranice
-			for (int i = 0; i < 9; ++i) {
-				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121White, 96, stride);
-			}
 
-			for (int i = 9; i < 15; ++i) {
-				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121Green, 96, stride);
-			}
-
-			for (int i = 15; i < 21; ++i) {
-				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121Yellow, 96, stride);
-			}
-
-			for (int i = 21; i < 28; ++i) {
-				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow234Red, 96, stride);
-			}
-
-			for (int i = 28; i < 35; ++i) {
-				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow567Blue, 96, stride);
-			}
-
-			for (int i = 35; i < 42; ++i) {
-				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow8910Orange, 96, stride);
-			}
-
-			for (int i = 42; i < 48; ++i) {
-				RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121White, 96, stride);
-			}
+		//pokretljive stranice
+		for (int i = 0; i < 9; ++i) {
+			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121White, 96, stride);
 		}
 
+		for (int i = 9; i < 15; ++i) {
+			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121Green, 96, stride);
+		}
+
+		for (int i = 15; i < 21; ++i) {
+			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121Yellow, 96, stride);
+		}
+
+		for (int i = 21; i < 28; ++i) {
+			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow234Red, 96, stride);
+		}
+
+		for (int i = 28; i < 35; ++i) {
+			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow567Blue, 96, stride);
+		}
+
+		for (int i = 35; i < 42; ++i) {
+			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow8910Orange, 96, stride);
+		}
+
+		for (int i = 42; i < 48; ++i) {
+			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121White, 96, stride);
+		}
 
 		glBindVertexArray(0);
 		glUseProgram(0);
@@ -368,10 +366,50 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 
 
 void UpdateValueR(float& xcube, float& ycube) {
-	if (ycube + 0.34 >= 0.45 && xcube < 0.01 && xcube > -0.01)		
-		ycube -= 0.7;		
-	else if(xcube < 0.01 && xcube > -0.01)
+	if (ycube + 0.34 >= 0.45 && xcube < 0.01 && xcube > -0.01)
+		ycube -= 0.7;
+	else if (xcube < 0.01 && xcube > -0.01)
 		ycube += 0.35;
+
+	//Gornja leva ivica
+	if(xcube > 0.06 && xcube < 0.16 && ycube > 0.0 && ycube < 0.11)
+		xcube = 0.35;
+
+	////Gornja ivica
+	else if (xcube > 0.16 && xcube < 0.26 && ycube > 0.0 && ycube < 0.11) {
+		ycube = 0.0;
+		xcube = 0.35;
+	}
+
+	////Gornja desna ivica
+	else if (xcube > 0.26 && xcube < 0.36 && ycube > 0.0 && ycube < 0.11)
+		ycube = -0.1;
+
+	////Desna ivica
+	else if (xcube > 0.26 && xcube < 0.36 && ycube > -0.1 && ycube < 0.01) {
+		ycube = -0.1;
+		xcube = 0.25;
+	}
+
+	////Donja desna ivica
+	else if (xcube > 0.26 && xcube < 0.36 && ycube > -0.2 && ycube < -0.09)
+		xcube = 0.15;
+
+	////Donja ivica
+	else if (xcube > 0.16 && xcube < 0.26 && ycube > -0.2 && ycube < -0.09) {
+		ycube = 0.0;
+		xcube = 0.15;
+	}
+
+	////Donja leva ivica
+	else if (xcube > 0.06 && xcube < 0.16 && ycube > -0.2 && ycube < -0.09)
+		ycube = 0.1;
+
+	////Leva ivica
+	else if (xcube > 0.06 && xcube < 0.16 && ycube > -0.1 && ycube < 0.01) {
+		ycube = 0.1;
+		xcube = 0.25;
+	}
 }
 
 void UpdateValueRPrime(float& xcube, float& ycube) {
@@ -382,7 +420,7 @@ void UpdateValueRPrime(float& xcube, float& ycube) {
 }
 
 void UpdateValueU(float& xcube, float& ycube) {
-	if (xcube + -0.34 < -0.55 && ycube > 0.05 && ycube< 0.15)
+	if (xcube + -0.34 < -0.55 && ycube > 0.05 && ycube < 0.15)
 		xcube += 1.05;
 	else if (ycube > 0.05 && ycube < 0.15)
 		xcube -= 0.35;
