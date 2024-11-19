@@ -165,15 +165,126 @@ int main(void)
 		-0.025, -0.05,        1.0, 0.5, 0.0, 1.0,
 	};
 
+	float linesVertices[] = {
+		-0.32, 0.5,       0.2, 0.2, 0.2, 1.0,
+		-0.32, 0.2,       0.2, 0.2, 0.2, 1.0,
+		-0.22, 0.5,       0.2, 0.2, 0.2, 1.0,
+		-0.22, 0.2,       0.2, 0.2, 0.2, 1.0,
+		-0.12, 0.5,       0.2, 0.2, 0.2, 1.0,
+		-0.12, 0.2,       0.2, 0.2, 0.2, 1.0,
+		-0.02, 0.5,       0.2, 0.2, 0.2, 1.0,
+		-0.02, 0.2,       0.2, 0.2, 0.2, 1.0,
+
+		-0.32, 0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.32, -0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.22, 0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.22, -0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.12, 0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.12, -0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.02, 0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.02, -0.15,       0.2, 0.2, 0.2, 1.0,
+
+		-0.32, -0.2,       0.2, 0.2, 0.2, 1.0,
+		-0.32, -0.5,       0.2, 0.2, 0.2, 1.0,
+		-0.22, -0.2,       0.2, 0.2, 0.2, 1.0,
+		-0.22, -0.5,       0.2, 0.2, 0.2, 1.0,
+		-0.12, -0.2,       0.2, 0.2, 0.2, 1.0,
+		-0.12, -0.5,       0.2, 0.2, 0.2, 1.0,
+		-0.02, -0.2,       0.2, 0.2, 0.2, 1.0,
+		-0.02, -0.5,       0.2, 0.2, 0.2, 1.0,
+
+		-0.67, 0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.67, -0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.57, 0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.57, -0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.47, 0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.47, -0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.37, 0.15,       0.2, 0.2, 0.2, 1.0,
+		-0.37, -0.15,       0.2, 0.2, 0.2, 1.0,
+
+		0.03, 0.15,       0.2, 0.2, 0.2, 1.0,
+		0.03, -0.15,       0.2, 0.2, 0.2, 1.0,
+		0.13, 0.15,       0.2, 0.2, 0.2, 1.0,
+		0.13, -0.15,       0.2, 0.2, 0.2, 1.0,
+		0.23, 0.15,       0.2, 0.2, 0.2, 1.0,
+		0.23, -0.15,       0.2, 0.2, 0.2, 1.0,
+		0.33, 0.15,       0.2, 0.2, 0.2, 1.0,
+		0.33, -0.15,       0.2, 0.2, 0.2, 1.0,
+
+		0.38, 0.15,       0.2, 0.2, 0.2, 1.0,
+		0.38, -0.15,       0.2, 0.2, 0.2, 1.0,
+		0.48, 0.15,       0.2, 0.2, 0.2, 1.0,
+		0.48, -0.15,       0.2, 0.2, 0.2, 1.0,
+		0.58, 0.15,       0.2, 0.2, 0.2, 1.0,
+		0.58, -0.15,       0.2, 0.2, 0.2, 1.0,
+		0.67, 0.15,       0.2, 0.2, 0.2, 1.0,
+		0.67, -0.15,       0.2, 0.2, 0.2, 1.0,
+
+		-0.32, 0.495,       0.2, 0.2, 0.2, 1.0,
+		-0.02, 0.495,       0.2, 0.2, 0.2, 1.0,
+		-0.32, 0.4,       0.2, 0.2, 0.2, 1.0,
+		-0.02, 0.4,       0.2, 0.2, 0.2, 1.0,
+		-0.32, 0.304,       0.2, 0.2, 0.2, 1.0,
+		-0.02, 0.304,       0.2, 0.2, 0.2, 1.0,
+		-0.32, 0.205,       0.2, 0.2, 0.2, 1.0,
+		-0.02, 0.205,       0.2, 0.2, 0.2, 1.0,
+
+		-0.32, 0.147,       0.2, 0.2, 0.2, 1.0,
+		-0.02, 0.147,       0.2, 0.2, 0.2, 1.0,
+		-0.32, 0.052,       0.2, 0.2, 0.2, 1.0,
+		-0.02, 0.052,       0.2, 0.2, 0.2, 1.0,
+		-0.32, -0.05,       0.2, 0.2, 0.2, 1.0,
+		-0.02, -0.05,       0.2, 0.2, 0.2, 1.0,
+		-0.32, -0.147,       0.2, 0.2, 0.2, 1.0,
+		-0.02, -0.147,       0.2, 0.2, 0.2, 1.0,
+
+		-0.32, -0.205,       0.2, 0.2, 0.2, 1.0,
+		-0.02, -0.205,       0.2, 0.2, 0.2, 1.0,
+		-0.32, -0.304,       0.2, 0.2, 0.2, 1.0,
+		-0.02, -0.304,       0.2, 0.2, 0.2, 1.0,
+		-0.32, -0.4,       0.2, 0.2, 0.2, 1.0,
+		-0.02, -0.4,       0.2, 0.2, 0.2, 1.0,
+		-0.32, -0.495,       0.2, 0.2, 0.2, 1.0,
+		-0.02, -0.495,       0.2, 0.2, 0.2, 1.0,
+
+		-0.67, 0.147,       0.2, 0.2, 0.2, 1.0,
+		-0.37, 0.147,       0.2, 0.2, 0.2, 1.0,
+		-0.67, 0.052,       0.2, 0.2, 0.2, 1.0,
+		-0.37, 0.052,       0.2, 0.2, 0.2, 1.0,
+		-0.67, -0.05,       0.2, 0.2, 0.2, 1.0,
+		-0.37, -0.05,       0.2, 0.2, 0.2, 1.0,
+		-0.67, -0.147,       0.2, 0.2, 0.2, 1.0,
+		-0.37, -0.147,       0.2, 0.2, 0.2, 1.0,
+
+		0.03, 0.147,       0.2, 0.2, 0.2, 1.0,
+		0.33, 0.147,       0.2, 0.2, 0.2, 1.0,
+		0.03, 0.052,       0.2, 0.2, 0.2, 1.0,
+		0.33, 0.052,       0.2, 0.2, 0.2, 1.0,
+		0.03, -0.05,       0.2, 0.2, 0.2, 1.0,
+		0.33, -0.05,       0.2, 0.2, 0.2, 1.0,
+		0.03, -0.147,      0.2, 0.2, 0.2, 1.0,
+		0.33, -0.147,      0.2, 0.2, 0.2, 1.0,
+
+		0.38, 0.147,        0.2, 0.2, 0.2, 1.0,
+		0.67, 0.147,		0.2, 0.2, 0.2, 1.0,
+		0.38, 0.052,		0.2, 0.2, 0.2, 1.0,
+		0.67, 0.052,		0.2, 0.2, 0.2, 1.0,
+		0.38, -0.05,		0.2, 0.2, 0.2, 1.0,
+		0.67, -0.05,		0.2, 0.2, 0.2, 1.0,
+		0.38, -0.147,		0.2, 0.2, 0.2, 1.0,
+		0.67, -0.147,		0.2, 0.2, 0.2, 1.0,
+
+	};
 
 	unsigned int stride = 6 * sizeof(float);
+	int numVertices = sizeof(linesVertices) / stride;
 
 	//generisanja
-	unsigned int VAO[54];
-	glGenVertexArrays(54, VAO);
+	unsigned int VAO[55];
+	glGenVertexArrays(55, VAO);
 
-	unsigned int VBO[54];
-	glGenBuffers(54, VBO);
+	unsigned int VBO[55];
+	glGenBuffers(55, VBO);
 
 
 	//bindovanja
@@ -233,9 +344,20 @@ int main(void)
 		SetupCube(VAO[51], VBO[51], cubeRow11121Green, 96);
 		SetupCube(VAO[52], VBO[52], cubeRow11121Yellow, 96);
 		SetupCube(VAO[53], VBO[53], cubeRow11121Yellow, 96);
-
-
 	}
+
+	glBindVertexArray(VAO[54]);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[54]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(linesVertices), linesVertices, GL_STATIC_DRAW);
+
+	// Postavljanje atributa za pozicije
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	// Postavljanje atributa za boje
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(2 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
 	unsigned int basicShader = createShader("basic.vert", "basic.frag");
 	unsigned int uPosLoc = glGetUniformLocation(basicShader, "uPos");
 
@@ -253,6 +375,8 @@ int main(void)
 		glUseProgram(basicShader);
 
 		//renderovanje
+
+
 
 		//centri
 		{
@@ -292,6 +416,15 @@ int main(void)
 		for (int i = 42; i < 48; ++i) {
 			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121White, 96, stride);
 		}
+
+		//linije
+		glUniform2f(uPosLoc, 0, 0);
+		glBindVertexArray(VAO[54]);
+		glLineWidth(3.0);
+		for (int i = 0; i < numVertices; i += 2) {
+			glDrawArrays(GL_LINE_LOOP, i, 2);
+		}
+		glLineWidth(1.0);
 
 		glBindVertexArray(0);
 		glUseProgram(0);
@@ -715,7 +848,7 @@ void UpdateValueL(float& xcube, float& ycube) {
 	}
 	//generalno
 	else if (ycube < 0.46 && ycube > -0.11 && xcube > -0.21 && xcube < -0.11) {
-		
+
 		ycube -= 0.35;
 	}
 
@@ -872,7 +1005,7 @@ void UpdateValueF(float& xcube, float& ycube) {
 
 	//Rotacija okoline
 	//Gornja leva ivica
-	if (xcube > -0.21 && xcube < -0.11 && ycube > 0.16 && ycube < 0.26){
+	if (xcube > -0.21 && xcube < -0.11 && ycube > 0.16 && ycube < 0.26) {
 		ycube = 0.1;
 		xcube = 0.15;
 	}
@@ -931,18 +1064,109 @@ void UpdateValueF(float& xcube, float& ycube) {
 		ycube = 0.25;
 		xcube = 0.0;
 	}
-
 }
 
 void UpdateValueFPrime(float& xcube, float& ycube) {
 	//Rotacija prednje strane
+	//Gornja leva ivica
+	if (xcube > -0.21 && xcube < -0.11 && ycube > 0.01 && ycube < 0.11)
+		ycube = -0.1;
+	//Gornja ivica
+	else if (xcube > -0.11 && xcube < -0.01 && ycube > 0.01 && ycube < 0.11) {
+		ycube = 0.00;
+		xcube = -0.2;
+	}
+	//Gornja desna ivica
+	else if (xcube > -0.01 && xcube < 0.09 && ycube > 0.01 && ycube < 0.11)
+		xcube = -0.2;
+	//Desna ivica
+	else if (xcube > -0.01 && xcube < 0.09 && ycube > -0.09 && ycube < 0.01) {
+		ycube = 0.1;
+		xcube = -0.1;
+	}
+	//Donja desna ivica
+	else if (xcube > -0.01 && xcube < 0.09 && ycube > -0.19 && ycube < -0.09)
+		ycube = 0.1;
+	//Donja ivica
+	else if (xcube > -0.11 && xcube < -0.01 && ycube > -0.19 && ycube < -0.09) {
+		ycube = 0.0;
+		xcube = 0.0;
+	}
+	//Donja leva ivica
+	else if (xcube > -0.21 && xcube < -0.11 && ycube > -0.19 && ycube < -0.09)
+		xcube = 0.0;
 
+	//Leva ivica
+	else if (xcube > -0.21 && xcube < -0.11 && ycube > -0.09 && ycube < 0.01) {
+		ycube = -0.1;
+		xcube = -0.1;
+	}
+
+	//Rotacija okoline
+	//Gornja leva ivica
+	if (xcube > -0.21 && xcube < -0.11 && ycube > 0.16 && ycube < 0.26) {
+		ycube = -0.1;
+		xcube = -0.35;
+	}
+	//Gornja ivica
+	else if (xcube > -0.11 && xcube < -0.01 && ycube > 0.16 && ycube < 0.26) {
+		ycube = 0.0;
+		xcube = -0.35;
+	}
+	//Gornja desna ivica bele
+	else if (xcube > -0.01 && xcube < 0.09 && ycube > 0.16 && ycube < 0.26) {
+		ycube = 0.1;
+		xcube = -0.35;
+	}
+	//Gornja desna ivica crvene
+	else if (xcube > 0.11 && xcube < 0.21 && ycube > 0.01 && ycube < 0.11) {
+		ycube = 0.25;
+		xcube = -0.2;
+	}
+	//Desna ivica
+	else if (xcube > 0.11 && xcube < 0.21 && ycube > -0.09 && ycube < 0.01) {
+		ycube = 0.25;
+		xcube = -0.1;
+	}
+	//Donja desna ivica crvene
+	else if (xcube > 0.11 && xcube < 0.21 && ycube > -0.19 && ycube < -0.09) {
+		ycube = 0.25;
+		xcube = 0.0;
+	}
+	//Donja desna ivica zute
+	else if (xcube > -0.01 && xcube < 0.09 && ycube > -0.34 && ycube < -0.24) {
+		ycube = 0.1;
+		xcube = 0.15;
+	}
+	//Donja ivica
+	else if (xcube > -0.11 && xcube < -0.01 && ycube > -0.34 && ycube < -0.24) {
+		ycube = 0.0;
+		xcube = 0.15;
+	}
+	//Donja leva ivica zute
+	else if (xcube > -0.21 && xcube < -0.11 && ycube > -0.34 && ycube < -0.24) {
+		ycube = -0.1;
+		xcube = 0.15;
+	}
+	//Donja leva narandzaste
+	else if (xcube > -0.36 && xcube < -0.26 && ycube > -0.19 && ycube < -0.09) {
+		ycube = -0.25;
+		xcube = 0.0;
+	}
+	//Leva ivica
+	else if (xcube > -0.36 && xcube < -0.26 && ycube > -0.09 && ycube < 0.01) {
+		ycube = -0.25;
+		xcube = -0.1;
+	}
+	//Gornja leva ivica narandzaste
+	else if (xcube > -0.36 && xcube < -0.26 && ycube > 0.01 && ycube < 0.11) {
+		ycube = -0.25;
+		xcube = -0.2;
+	}
 }
 
 unsigned int compileShader(GLenum type, const char* source) {
 
-	//Uzima kod u fajlu na putanji "source", kompajlira ga i vraca sejder tipa "type"
-	//Citanje izvornog koda iz fajla
 	string content = "";
 	ifstream file(source);
 	stringstream ss;
