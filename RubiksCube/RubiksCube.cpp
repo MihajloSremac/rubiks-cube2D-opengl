@@ -26,6 +26,8 @@ void UpdateValueF(float& xcube, float& ycube);
 void UpdateValueFPrime(float& xcube, float& ycube);
 void UpdateValueD(float& xcube, float& ycube);
 void UpdateValueDPrime(float& xcube, float& ycube);
+void UpdateValueB(float& xcube, float& ycube);
+void UpdateValueBPrime(float& xcube, float& ycube);
 
 //R rotacija
 bool rKeyPressed = false;
@@ -46,6 +48,10 @@ bool gKeyPressed = false;
 //D rotacija
 bool dKeyPressed = false;
 bool sKeyPressed = false;
+
+//B rotacija
+bool bKeyPressed = false;
+bool nKeyPressed = false;
 
 float xcube[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.15, 0.15, 0.15, 0.25, 0.25, 0.35, 0.35, 0.35, 0.50, 0.50, 0.50, 0.60, 0.60, 0.70, 0.70, 0.70, -0.55, -0.55, -0.55, -0.45, -0.45, -0.35, -0.35, -0.35, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1 };
 float ycube[] = { 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.45, 0.25, 0.1, -0.1, -0.25, -0.45 };
@@ -597,6 +603,36 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 				UpdateValueDPrime(xcube[i], ycube[i]);
 
 			sKeyPressed = false;
+		}
+	}
+	else if (key == GLFW_KEY_B)
+	{
+		if (action == GLFW_PRESS && !bKeyPressed)
+		{
+			bKeyPressed = true;
+		}
+		else if (action == GLFW_RELEASE && bKeyPressed)
+		{
+
+			for (int i = 0; i < 48; i++)
+				UpdateValueB(xcube[i], ycube[i]);
+
+			bKeyPressed = false;
+		}
+	}
+	else if (key == GLFW_KEY_N)
+	{
+		if (action == GLFW_PRESS && !nKeyPressed)
+		{
+			nKeyPressed = true;
+		}
+		else if (action == GLFW_RELEASE && nKeyPressed)
+		{
+
+			for (int i = 0; i < 48; i++)
+				UpdateValueBPrime(xcube[i], ycube[i]);
+
+			nKeyPressed = false;
 		}
 	}
 }
@@ -1235,7 +1271,7 @@ void UpdateValueD(float& xcube, float& ycube) {
 		ycube = -0.25;
 		xcube = -0.1;
 	}
-	
+
 	//Ravna rotacija
 	if (xcube + 0.34 > 0.75 && ycube > -0.15 && ycube < -0.05)
 		xcube -= 1.05;
@@ -1282,6 +1318,200 @@ void UpdateValueDPrime(float& xcube, float& ycube) {
 	else if (xcube > -0.21 && xcube < -0.11 && ycube < -0.34 && ycube > -0.44) {
 		ycube = -0.45;
 		xcube = -0.1;
+	}
+}
+
+void UpdateValueB(float& xcube, float& ycube) {
+	//Rotacija zadnje strane
+	//Gornja leva ivica
+	if (xcube > 0.41 && xcube < 0.51 && ycube > 0.01 && ycube < 0.11)
+		xcube = 0.70;
+	//Gornja ivica
+	else if (xcube > 0.51 && xcube < 0.61 && ycube > 0.01 && ycube < 0.11) {
+		ycube = 0.0;
+		xcube = 0.70;
+	}
+	//Gornja desna ivica
+	else if (xcube > 0.61 && xcube < 0.71 && ycube > 0.01 && ycube < 0.11)
+		ycube = -0.1;
+	//Desna ivica
+	else if (xcube > 0.61 && xcube < 0.71 && ycube > -0.09 && ycube < 0.01) {
+		ycube = -0.1;
+		xcube = 0.60;
+	}
+	//Donja desna ivica
+	else if (xcube > 0.61 && xcube < 0.71 && ycube > -0.19 && ycube < -0.09)
+		xcube = 0.50;
+	//Donja ivica
+	else if (xcube > 0.51 && xcube < 0.61 && ycube > -0.19 && ycube < -0.09) {
+		ycube = 0.0;
+		xcube = 0.50;
+	}
+	//Donja leva ivica
+	else if (xcube > 0.41 && xcube < 0.51 && ycube > -0.19 && ycube < -0.09)
+		ycube = 0.1;
+	//Leva ivica
+	else if (xcube > 0.41 && xcube < 0.51 && ycube > -0.09 && ycube < 0.01) {
+		ycube = 0.1;
+		xcube = 0.60;
+	}
+	//Rotacija okoline
+	//Gornja leva ivica
+	if (xcube > -0.21 && xcube < -0.11 && ycube > 0.36 && ycube < 0.46) {
+		ycube = -0.1;
+		xcube = -0.55;
+	}
+	//Gornja ivica
+	else if (xcube > -0.11 && xcube < -0.01 && ycube > 0.36 && ycube < 0.46) {
+		ycube = 0.0;
+		xcube = -0.55;
+	}
+	//Gornja desna ivica
+	else if (xcube > -0.01 && xcube < 0.09 && ycube > 0.36 && ycube < 0.46) {
+		ycube = 0.1;
+		xcube = -0.55;
+	}
+	//Gornja desna ivica crvene
+	else if (xcube > 0.26 && xcube < 0.36 && ycube > 0.09 && ycube < 0.19) {
+		ycube = 0.45;
+		xcube = -0.2;
+	}
+	//Desna ivica
+	else if (xcube > 0.26 && xcube < 0.36 && ycube > -0.01 && ycube < 0.09) {
+		ycube = 0.45;
+		xcube = -0.1;
+	}
+	//Donja desna ivica crvene
+	else if (xcube > 0.26 && xcube < 0.36 && ycube > -0.11 && ycube < -0.01) {
+		ycube = 0.45;
+		xcube = 0.0;
+	}
+	//Donja desna ivica zute
+	else if (xcube > -0.01 && xcube < 0.09 && ycube > -0.46 && ycube < -0.36) {
+		ycube = 0.1;
+		xcube = 0.35;
+	}
+	//Donja ivica
+	else if (xcube > -0.11 && xcube < -0.01 && ycube > -0.46 && ycube < -0.36) {
+		ycube = 0.0;
+		xcube = 0.35;
+	}
+	//Donja leva ivica zute
+	else if (xcube > -0.21 && xcube < -0.11 && ycube > -0.46 && ycube < -0.36) {
+		ycube = -0.1;
+		xcube = 0.35;
+	}
+	//Donja leva narandzaste
+	else if (xcube > -0.56 && xcube < -0.46 && ycube > -0.11 && ycube < -0.01) {
+		ycube = -0.45;
+		xcube = 0.0;
+	}
+	//Leva ivica
+	else if (xcube > -0.56 && xcube < -0.46 && ycube > -0.01 && ycube < 0.09) {
+		ycube = -0.45;
+		xcube = -0.1;
+	}
+	//Gornja leva ivica narandzaste
+	else if (xcube > -0.56 && xcube < -0.46 && ycube > 0.09 && ycube < 0.19) {
+		ycube = -0.45;
+		xcube = -0.2;
+	}
+}
+
+void UpdateValueBPrime(float& xcube, float& ycube) {
+	//Rotacija zadnje strane
+	//Gornja leva ivica
+	if (xcube > 0.41 && xcube < 0.51 && ycube > 0.01 && ycube < 0.11)
+		ycube = -0.1;
+	//Gornja ivica
+	else if (xcube > 0.51 && xcube < 0.61 && ycube > 0.01 && ycube < 0.11) {
+		ycube = 0.0;
+		xcube = 0.50;
+	}
+	//Gornja desna ivica
+	else if (xcube > 0.61 && xcube < 0.71 && ycube > 0.01 && ycube < 0.11)
+		xcube = 0.50;
+	//Desna ivica
+	else if (xcube > 0.61 && xcube < 0.71 && ycube > -0.09 && ycube < 0.01) {
+		ycube = 0.1;
+		xcube = 0.60;
+	}
+	//Donja desna ivica
+	else if (xcube > 0.61 && xcube < 0.71 && ycube > -0.19 && ycube < -0.09)
+		ycube = 0.1;
+	//Donja ivica
+	else if (xcube > 0.51 && xcube < 0.61 && ycube > -0.19 && ycube < -0.09) {
+		ycube = 0.0;
+		xcube = 0.70;
+	}
+	//Donja leva ivica
+	else if (xcube > 0.41 && xcube < 0.51 && ycube > -0.19 && ycube < -0.09)
+		xcube = 0.70;
+	//Leva ivica
+	else if (xcube > 0.41 && xcube < 0.51 && ycube > -0.09 && ycube < 0.01) {
+		ycube = -0.1;
+		xcube = 0.60;
+	}
+	//Rotacija okoline
+	//Gornja leva ivica
+	if (xcube > -0.21 && xcube < -0.11 && ycube > 0.36 && ycube < 0.46) {
+		ycube = 0.1;
+		xcube = 0.35;
+	}
+	//Gornja ivica
+	else if (xcube > -0.11 && xcube < -0.01 && ycube > 0.36 && ycube < 0.46) {
+		ycube = 0.0;
+		xcube = 0.35;
+	}
+	//Gornja desna ivica
+	else if (xcube > -0.01 && xcube < 0.09 && ycube > 0.36 && ycube < 0.46) {
+		ycube = -0.1;
+		xcube = 0.35;
+	}
+	//Gornja desna ivica crvene
+	else if (xcube > 0.26 && xcube < 0.36 && ycube > 0.09 && ycube < 0.19) {
+		ycube = -0.45;
+		xcube = 0.0;
+	}
+	//Desna ivica
+	else if (xcube > 0.26 && xcube < 0.36 && ycube > -0.01 && ycube < 0.09) {
+		ycube = -0.45;
+		xcube = -0.1;
+	}
+	//Donja desna ivica crvene
+	else if (xcube > 0.26 && xcube < 0.36 && ycube > -0.11 && ycube < -0.01) {
+		ycube = -0.45;
+		xcube = -0.2;
+	}
+	//Donja desna ivica zute
+	else if (xcube > -0.01 && xcube < 0.09 && ycube > -0.46 && ycube < -0.36) {
+		ycube = -0.1;
+		xcube = -0.55;
+	}
+	//Donja ivica
+	else if (xcube > -0.11 && xcube < -0.01 && ycube > -0.46 && ycube < -0.36) {
+		ycube = 0.0;
+		xcube = -0.55;
+	}
+	//Donja leva ivica zute
+	else if (xcube > -0.21 && xcube < -0.11 && ycube > -0.46 && ycube < -0.36) {
+		ycube = 0.1;
+		xcube = -0.55;
+	}
+	//Donja leva narandzaste
+	else if (xcube > -0.56 && xcube < -0.46 && ycube > -0.11 && ycube < -0.01) {
+		ycube = 0.45;
+		xcube = -0.2;
+	}
+	//Leva ivica
+	else if (xcube > -0.56 && xcube < -0.46 && ycube > -0.01 && ycube < 0.09) {
+		ycube = 0.45;
+		xcube = -0.1;
+	}
+	//Gornja leva ivica narandzaste
+	else if (xcube > -0.56 && xcube < -0.46 && ycube > 0.09 && ycube < 0.19) {
+		ycube = 0.45;
+		xcube = 0.0;
 	}
 }
 
