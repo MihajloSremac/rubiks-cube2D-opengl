@@ -3,6 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
+#include <unordered_map>
+#include <functional>
 
 using namespace std;
 
@@ -28,6 +31,9 @@ void UpdateValueD(float& xcube, float& ycube);
 void UpdateValueDPrime(float& xcube, float& ycube);
 void UpdateValueB(float& xcube, float& ycube);
 void UpdateValueBPrime(float& xcube, float& ycube);
+void ResetCube();
+string generateScramble();
+void processScramble(const string& scramble);
 
 //R rotacija
 bool rKeyPressed = false;
@@ -52,6 +58,14 @@ bool sKeyPressed = false;
 //B rotacija
 bool bKeyPressed = false;
 bool nKeyPressed = false;
+
+bool backspacePressed = false;
+bool scramblePressed = false;
+
+string scramble = "";
+
+float solvedx[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.15, 0.15, 0.15, 0.25, 0.25, 0.35, 0.35, 0.35, 0.50, 0.50, 0.50, 0.60, 0.60, 0.70, 0.70, 0.70, -0.55, -0.55, -0.55, -0.45, -0.45, -0.35, -0.35, -0.35, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1 };
+float solvedy[] = { 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.45, 0.25, 0.1, -0.1, -0.25, -0.45 };
 
 float xcube[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.15, 0.15, 0.15, 0.25, 0.25, 0.35, 0.35, 0.35, 0.50, 0.50, 0.50, 0.60, 0.60, 0.70, 0.70, 0.70, -0.55, -0.55, -0.55, -0.45, -0.45, -0.35, -0.35, -0.35, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1 };
 float ycube[] = { 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.45, 0.25, 0.1, -0.1, -0.25, -0.45 };
@@ -454,185 +468,75 @@ int main(void)
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (key == GLFW_KEY_R)
+	// Create an array of key-value pairs for keys and corresponding Update functions
+	struct KeyAction {
+		int key;
+		bool* keyPressed;
+		void (*updateFunction)(float&, float&);  // Change the function pointer type to accept float& parameters
+	};
+
+	// Define the key-action pairs
+	KeyAction actions[] = {
+		{GLFW_KEY_R, &rKeyPressed, UpdateValueR},
+		{GLFW_KEY_U, &uKeyPressed, UpdateValueU},
+		{GLFW_KEY_T, &tKeyPressed, UpdateValueRPrime},
+		{GLFW_KEY_I, &iKeyPressed, UpdateValueUPrime},
+		{GLFW_KEY_L, &lKeyPressed, UpdateValueL},
+		{GLFW_KEY_SEMICOLON, &semiColonKeyPressed, UpdateValueLPrime},
+		{GLFW_KEY_F, &fKeyPressed, UpdateValueF},
+		{GLFW_KEY_G, &gKeyPressed, UpdateValueFPrime},
+		{GLFW_KEY_D, &dKeyPressed, UpdateValueD},
+		{GLFW_KEY_S, &sKeyPressed, UpdateValueDPrime},
+		{GLFW_KEY_B, &bKeyPressed, UpdateValueB},
+		{GLFW_KEY_N, &nKeyPressed, UpdateValueBPrime},
+	};
+
+	// Special case for Left Shift key for scramble
+	if (key == GLFW_KEY_LEFT_SHIFT)
 	{
-		if (action == GLFW_PRESS && !rKeyPressed)
+		if (action == GLFW_PRESS && !scramblePressed)
 		{
-			rKeyPressed = true;
+			scramblePressed = true;
 		}
-		else if (action == GLFW_RELEASE && rKeyPressed)
+		else if (action == GLFW_RELEASE && scramblePressed)
 		{
-
-
-			for (int i = 0; i < 48; i++)
-				UpdateValueR(xcube[i], ycube[i]);
-
-			rKeyPressed = false;
+			scramble = generateScramble();
+			scramblePressed = false;
 		}
+		return; 
 	}
-	else if (key == GLFW_KEY_U)
+
+	if (key == GLFW_KEY_BACKSPACE)
 	{
-		if (action == GLFW_PRESS && !uKeyPressed)
+		if (action == GLFW_PRESS && !backspacePressed)
 		{
-			uKeyPressed = true;
+			backspacePressed = true;
 		}
-		else if (action == GLFW_RELEASE && uKeyPressed)
+		else if (action == GLFW_RELEASE && backspacePressed)
 		{
-
-			for (int i = 0; i < 48; i++)
-				UpdateValueU(xcube[i], ycube[i]);
-
-			uKeyPressed = false;
+			ResetCube();
+			backspacePressed = false;
 		}
+		return; 
 	}
-	else if (key == GLFW_KEY_T)
+
+
+	for (const auto& actionStruct : actions)
 	{
-		if (action == GLFW_PRESS && !tKeyPressed)
+		if (key == actionStruct.key)
 		{
-			tKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && tKeyPressed)
-		{
+			if (action == GLFW_PRESS && !(*actionStruct.keyPressed))
+			{
+				*actionStruct.keyPressed = true;
+			}
+			else if (action == GLFW_RELEASE && (*actionStruct.keyPressed))
+			{
+				for (int i = 0; i < 48; i++)
+					actionStruct.updateFunction(xcube[i], ycube[i]);
 
-			for (int i = 0; i < 48; i++)
-				UpdateValueRPrime(xcube[i], ycube[i]);
-
-			tKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_I)
-	{
-		if (action == GLFW_PRESS && !iKeyPressed)
-		{
-			iKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && iKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				UpdateValueUPrime(xcube[i], ycube[i]);
-
-			iKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_L)
-	{
-		if (action == GLFW_PRESS && !lKeyPressed)
-		{
-			lKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && lKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				UpdateValueL(xcube[i], ycube[i]);
-
-			lKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_SEMICOLON)
-	{
-		if (action == GLFW_PRESS && !semiColonKeyPressed)
-		{
-			semiColonKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && semiColonKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				UpdateValueLPrime(xcube[i], ycube[i]);
-
-			semiColonKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_F)
-	{
-		if (action == GLFW_PRESS && !fKeyPressed)
-		{
-			fKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && fKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				UpdateValueF(xcube[i], ycube[i]);
-
-			fKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_G)
-	{
-		if (action == GLFW_PRESS && !gKeyPressed)
-		{
-			gKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && gKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				UpdateValueFPrime(xcube[i], ycube[i]);
-
-			gKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_D)
-	{
-		if (action == GLFW_PRESS && !dKeyPressed)
-		{
-			dKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && dKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				UpdateValueD(xcube[i], ycube[i]);
-
-			dKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_S)
-	{
-		if (action == GLFW_PRESS && !sKeyPressed)
-		{
-			sKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && sKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				UpdateValueDPrime(xcube[i], ycube[i]);
-
-			sKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_B)
-	{
-		if (action == GLFW_PRESS && !bKeyPressed)
-		{
-			bKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && bKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				UpdateValueB(xcube[i], ycube[i]);
-
-			bKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_N)
-	{
-		if (action == GLFW_PRESS && !nKeyPressed)
-		{
-			nKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && nKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				UpdateValueBPrime(xcube[i], ycube[i]);
-
-			nKeyPressed = false;
+				*actionStruct.keyPressed = false;
+			}
+			break;  // Exit loop once the key is found
 		}
 	}
 }
@@ -1513,6 +1417,76 @@ void UpdateValueBPrime(float& xcube, float& ycube) {
 		ycube = 0.45;
 		xcube = 0.0;
 	}
+}
+
+void ResetCube() {
+	for (int i = 0; i < 48; i++) {
+		xcube[i] = solvedx[i];
+		ycube[i] = solvedy[i];
+	}
+}
+
+string generateScramble() {
+	int moves = 25;
+	vector<string> faces = { "U", "D", "L", "R", "F", "B" };
+	vector<string> modifiers = { "", "'", "2" };
+	string scramble;
+	string lastFace = "";
+
+	srand(time(0)); // Seed for randomness
+
+	for (int i = 0; i < moves; ++i) {
+		string face;
+		// Ensure the same face isn't repeated consecutively
+		do {
+			face = faces[rand() % faces.size()];
+		} while (face == lastFace);
+
+		string modifier = modifiers[rand() % modifiers.size()];
+		scramble += face + modifier + " ";
+		lastFace = face;
+	}
+	cout << scramble << endl;
+	processScramble(scramble);
+	return scramble;
+}
+
+void processScramble(const string& scramble) {
+	std::unordered_map<string, std::function<void()>> moveActions = {
+        {"R", []() { for (int i = 0; i < 48; ++i) UpdateValueR(xcube[i], ycube[i]); }},
+        {"R'", []() { for (int i = 0; i < 48; ++i) UpdateValueRPrime(xcube[i], ycube[i]); }},
+        {"R2", []() { for (int i = 0; i < 48; ++i) { UpdateValueR(xcube[i], ycube[i]); UpdateValueR(xcube[i], ycube[i]); }}},
+        {"U", []() { for (int i = 0; i < 48; ++i) UpdateValueU(xcube[i], ycube[i]); }},
+        {"U'", []() { for (int i = 0; i < 48; ++i) UpdateValueUPrime(xcube[i], ycube[i]); }},
+        {"U2", []() { for (int i = 0; i < 48; ++i) { UpdateValueU(xcube[i], ycube[i]); UpdateValueU(xcube[i], ycube[i]); }}},
+        {"D", []() { for (int i = 0; i < 48; ++i) UpdateValueD(xcube[i], ycube[i]); }},
+        {"D'", []() { for (int i = 0; i < 48; ++i) UpdateValueDPrime(xcube[i], ycube[i]); }},
+        {"D2", []() { for (int i = 0; i < 48; ++i) { UpdateValueD(xcube[i], ycube[i]); UpdateValueD(xcube[i], ycube[i]); }}},
+        {"L", []() { for (int i = 0; i < 48; ++i) UpdateValueL(xcube[i], ycube[i]); }},
+        {"L'", []() { for (int i = 0; i < 48; ++i) UpdateValueLPrime(xcube[i], ycube[i]); }},
+        {"L2", []() { for (int i = 0; i < 48; ++i) { UpdateValueL(xcube[i], ycube[i]); UpdateValueL(xcube[i], ycube[i]); }}},
+        {"F", []() { for (int i = 0; i < 48; ++i) UpdateValueF(xcube[i], ycube[i]); }},
+        {"F'", []() { for (int i = 0; i < 48; ++i) UpdateValueFPrime(xcube[i], ycube[i]); }},
+        {"F2", []() { for (int i = 0; i < 48; ++i) { UpdateValueF(xcube[i], ycube[i]); UpdateValueF(xcube[i], ycube[i]); }}},
+        {"B", []() { for (int i = 0; i < 48; ++i) UpdateValueB(xcube[i], ycube[i]); }},
+        {"B'", []() { for (int i = 0; i < 48; ++i) UpdateValueBPrime(xcube[i], ycube[i]); }},
+        {"B2", []() { for (int i = 0; i < 48; ++i) { UpdateValueB(xcube[i], ycube[i]); UpdateValueB(xcube[i], ycube[i]); }}}
+    };
+
+    string move;
+    ResetCube();
+
+    // Loop over each character in the scramble
+    for (size_t i = 0; i < scramble.size(); ++i) {
+        if (scramble[i] == ' ') {
+            if (moveActions.find(move) != moveActions.end()) {
+                moveActions[move]();  
+            }
+            move.clear();  
+        } else {
+            move += scramble[i];  
+        }
+    }
 }
 
 unsigned int compileShader(GLenum type, const char* source) {
