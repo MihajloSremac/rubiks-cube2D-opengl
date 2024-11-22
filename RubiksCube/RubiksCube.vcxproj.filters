@@ -16,10 +16,16 @@
     <Filter Include="Source Files\Shader Files">
       <UniqueIdentifier>{ec2a97bb-72b0-44ee-996d-09365058008b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\2DLogic">
+      <UniqueIdentifier>{ce33baf4-fd89-4fc0-a5eb-d808ee1c369c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RubiksCube.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeScramble.cpp">
+      <Filter>Source Files\2DLogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -30,5 +36,10 @@
     <None Include="basic.frag">
       <Filter>Source Files\Shader Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CubeScramble.h">
+      <Filter>Source Files\2DLogic</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
