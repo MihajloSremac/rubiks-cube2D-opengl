@@ -20,20 +20,7 @@ void SetupCube(GLuint vao, GLuint vbo, float* data, size_t dataSize);
 void RenderCube(GLint uPosLoc, GLfloat x, GLfloat y, GLuint vao, float* center, size_t centerSize, GLuint stride);
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-void UpdateValueR(float& xcube, float& ycube);
-void UpdateValueRPrime(float& xcube, float& ycube);
-void UpdateValueU(float& xcube, float& ycube);
-void UpdateValueUPrime(float& xcube, float& ycube);
-void UpdateValueL(float& xcube, float& ycube);
-void UpdateValueLPrime(float& xcube, float& ycube);
-void UpdateValueF(float& xcube, float& ycube);
-void UpdateValueFPrime(float& xcube, float& ycube);
-void UpdateValueD(float& xcube, float& ycube);
-void UpdateValueDPrime(float& xcube, float& ycube);
-void UpdateValueB(float& xcube, float& ycube);
-void UpdateValueBPrime(float& xcube, float& ycube);
-string generateScramble();
-void processScramble(const string& scramble);
+
 
 //R rotacija
 bool rKeyPressed = false;
@@ -401,14 +388,12 @@ int main(void)
 
 		//renderovanje
 		//centri
-		{
-			RenderCube(uPosLoc, 0, 0, VAO[0], greenCenter, 96, stride);
-			RenderCube(uPosLoc, 0, 0, VAO[1], orangeCenter, 96, stride);
-			RenderCube(uPosLoc, 0, 0, VAO[2], redCenter, 96, stride);
-			RenderCube(uPosLoc, 0, 0, VAO[3], blueCenter, 96, stride);
-			RenderCube(uPosLoc, 0, 0, VAO[4], whiteCenter, 96, stride);
-			RenderCube(uPosLoc, 0, 0, VAO[5], yellowCenter, 96, stride);
-		}
+		RenderCube(uPosLoc, 0, 0, VAO[0], greenCenter, 96, stride);
+		RenderCube(uPosLoc, 0, 0, VAO[1], orangeCenter, 96, stride);
+		RenderCube(uPosLoc, 0, 0, VAO[2], redCenter, 96, stride);
+		RenderCube(uPosLoc, 0, 0, VAO[3], blueCenter, 96, stride);
+		RenderCube(uPosLoc, 0, 0, VAO[4], whiteCenter, 96, stride);
+		RenderCube(uPosLoc, 0, 0, VAO[5], yellowCenter, 96, stride);
 
 		//pokretljive stranice
 		for (int i = 0; i < 9; ++i) {
@@ -462,310 +447,41 @@ int main(void)
 	return 0;
 }
 
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	if (key == GLFW_KEY_R)
-	{
-		if (action == GLFW_PRESS && !rKeyPressed)
-		{
-			rKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && rKeyPressed)
-		{
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueR(xcube[i], ycube[i]);
-
-			rKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_U)
-	{
-		if (action == GLFW_PRESS && !uKeyPressed)
-		{
-			uKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && uKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueU(xcube[i], ycube[i]);
-
-			uKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_T)
-	{
-		if (action == GLFW_PRESS && !tKeyPressed)
-		{
-			tKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && tKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueRPrime(xcube[i], ycube[i]);
-
-			tKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_I)
-	{
-		if (action == GLFW_PRESS && !iKeyPressed)
-		{
-			iKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && iKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueUPrime(xcube[i], ycube[i]);
-
-			iKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_L)
-	{
-		if (action == GLFW_PRESS && !lKeyPressed)
-		{
-			lKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && lKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueL(xcube[i], ycube[i]);
-
-			lKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_SEMICOLON)
-	{
-		if (action == GLFW_PRESS && !semiColonKeyPressed)
-		{
-			semiColonKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && semiColonKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueLPrime(xcube[i], ycube[i]);
-
-			semiColonKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_F)
-	{
-		if (action == GLFW_PRESS && !fKeyPressed)
-		{
-			fKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && fKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueF(xcube[i], ycube[i]);
-
-			fKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_G)
-	{
-		if (action == GLFW_PRESS && !gKeyPressed)
-		{
-			gKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && gKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueFPrime(xcube[i], ycube[i]);
-
-			gKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_D)
-	{
-		if (action == GLFW_PRESS && !dKeyPressed)
-		{
-			dKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && dKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueD(xcube[i], ycube[i]);
-
-			dKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_S)
-	{
-		if (action == GLFW_PRESS && !sKeyPressed)
-		{
-			sKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && sKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueDPrime(xcube[i], ycube[i]);
-
-			sKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_B)
-	{
-		if (action == GLFW_PRESS && !bKeyPressed)
-		{
-			bKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && bKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueB(xcube[i], ycube[i]);
-
-			bKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_N)
-	{
-		if (action == GLFW_PRESS && !nKeyPressed)
-		{
-			nKeyPressed = true;
-		}
-		else if (action == GLFW_RELEASE && nKeyPressed)
-		{
-
-			for (int i = 0; i < 48; i++)
-				cubeScramble.updateValueBPrime(xcube[i], ycube[i]);
-
-			nKeyPressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_BACKSPACE)
-	{
-		if (action == GLFW_PRESS && !backspacePressed)
-		{
-			backspacePressed = true;
-		}
-		else if (action == GLFW_RELEASE && backspacePressed)
-		{
-
-			cubeScramble.ResetCube(xcube,ycube);
-			backspacePressed = false;
-		}
-	}
-	else if (key == GLFW_KEY_LEFT_SHIFT)
-	{
-		if (action == GLFW_PRESS && !scramblePressed)
-		{
-			scramblePressed = true;
-		}
-		else if (action == GLFW_RELEASE && scramblePressed)
-		{
-			scramble = cubeScramble.generateScramble(xcube,ycube);
+	struct KeyAction {
+		bool* keyPressed;
+		std::function<void()> onRelease;
+	};
+	static std::unordered_map<int, KeyAction> keyActions = {
+		{GLFW_KEY_R, {&rKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueR(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_U, {&uKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueU(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_T, {&tKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueRPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_I, {&iKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueUPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_L, {&lKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueL(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_SEMICOLON, {&semiColonKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueLPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_F, {&fKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueF(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_G, {&gKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueFPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_D, {&dKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueD(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_S, {&sKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueDPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_B, {&bKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueB(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_N, {&nKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueBPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_BACKSPACE, {&backspacePressed, []() { cubeScramble.ResetCube(xcube, ycube); }}},
+		{GLFW_KEY_LEFT_SHIFT, {&scramblePressed, []() {
+			scramble = cubeScramble.generateScramble(xcube, ycube);
 			cout << scramble << endl;
-			scramblePressed = false;
+		}}},
+	};
+
+	if (keyActions.find(key) != keyActions.end()) {
+		auto& actionData = keyActions[key];
+		if (action == GLFW_PRESS && !(*actionData.keyPressed)) {
+			*actionData.keyPressed = true;
 		}
-	}
-}
-void UpdateValueBPrime(float& xcube, float& ycube) {
-	//Rotacija zadnje strane
-	//Gornja leva ivica
-	if (xcube > 0.41 && xcube < 0.51 && ycube > 0.01 && ycube < 0.11)
-		ycube = -0.1;
-	//Gornja ivica
-	else if (xcube > 0.51 && xcube < 0.61 && ycube > 0.01 && ycube < 0.11) {
-		ycube = 0.0;
-		xcube = 0.50;
-	}
-	//Gornja desna ivica
-	else if (xcube > 0.61 && xcube < 0.71 && ycube > 0.01 && ycube < 0.11)
-		xcube = 0.50;
-	//Desna ivica
-	else if (xcube > 0.61 && xcube < 0.71 && ycube > -0.09 && ycube < 0.01) {
-		ycube = 0.1;
-		xcube = 0.60;
-	}
-	//Donja desna ivica
-	else if (xcube > 0.61 && xcube < 0.71 && ycube > -0.19 && ycube < -0.09)
-		ycube = 0.1;
-	//Donja ivica
-	else if (xcube > 0.51 && xcube < 0.61 && ycube > -0.19 && ycube < -0.09) {
-		ycube = 0.0;
-		xcube = 0.70;
-	}
-	//Donja leva ivica
-	else if (xcube > 0.41 && xcube < 0.51 && ycube > -0.19 && ycube < -0.09)
-		xcube = 0.70;
-	//Leva ivica
-	else if (xcube > 0.41 && xcube < 0.51 && ycube > -0.09 && ycube < 0.01) {
-		ycube = -0.1;
-		xcube = 0.60;
-	}
-	//Rotacija okoline
-	//Gornja leva ivica
-	if (xcube > -0.21 && xcube < -0.11 && ycube > 0.36 && ycube < 0.46) {
-		ycube = 0.1;
-		xcube = 0.35;
-	}
-	//Gornja ivica
-	else if (xcube > -0.11 && xcube < -0.01 && ycube > 0.36 && ycube < 0.46) {
-		ycube = 0.0;
-		xcube = 0.35;
-	}
-	//Gornja desna ivica
-	else if (xcube > -0.01 && xcube < 0.09 && ycube > 0.36 && ycube < 0.46) {
-		ycube = -0.1;
-		xcube = 0.35;
-	}
-	//Gornja desna ivica crvene
-	else if (xcube > 0.26 && xcube < 0.36 && ycube > 0.09 && ycube < 0.19) {
-		ycube = -0.45;
-		xcube = 0.0;
-	}
-	//Desna ivica
-	else if (xcube > 0.26 && xcube < 0.36 && ycube > -0.01 && ycube < 0.09) {
-		ycube = -0.45;
-		xcube = -0.1;
-	}
-	//Donja desna ivica crvene
-	else if (xcube > 0.26 && xcube < 0.36 && ycube > -0.11 && ycube < -0.01) {
-		ycube = -0.45;
-		xcube = -0.2;
-	}
-	//Donja desna ivica zute
-	else if (xcube > -0.01 && xcube < 0.09 && ycube > -0.46 && ycube < -0.36) {
-		ycube = -0.1;
-		xcube = -0.55;
-	}
-	//Donja ivica
-	else if (xcube > -0.11 && xcube < -0.01 && ycube > -0.46 && ycube < -0.36) {
-		ycube = 0.0;
-		xcube = -0.55;
-	}
-	//Donja leva ivica zute
-	else if (xcube > -0.21 && xcube < -0.11 && ycube > -0.46 && ycube < -0.36) {
-		ycube = 0.1;
-		xcube = -0.55;
-	}
-	//Donja leva narandzaste
-	else if (xcube > -0.56 && xcube < -0.46 && ycube > -0.11 && ycube < -0.01) {
-		ycube = 0.45;
-		xcube = -0.2;
-	}
-	//Leva ivica
-	else if (xcube > -0.56 && xcube < -0.46 && ycube > -0.01 && ycube < 0.09) {
-		ycube = 0.45;
-		xcube = -0.1;
-	}
-	//Gornja leva ivica narandzaste
-	else if (xcube > -0.56 && xcube < -0.46 && ycube > 0.09 && ycube < 0.19) {
-		ycube = 0.45;
-		xcube = 0.0;
+		else if (action == GLFW_RELEASE && *actionData.keyPressed) {
+			actionData.onRelease();
+			*actionData.keyPressed = false;
+		}
 	}
 }
 
@@ -870,6 +586,10 @@ void RenderCube(GLint uPosLoc, GLfloat x, GLfloat y, GLuint vao, float* center, 
 
 	// Nacrtajte objekat koristeći glDrawArrays
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, centerSize / stride);
+}
+
+void RenderEverything() {
+
 }
 
 
