@@ -67,8 +67,8 @@ int main(void)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	GLFWwindow* window;
-	unsigned int wWidth = 700;
-	unsigned int wHeight = 700;
+	unsigned int wWidth = 1200;
+	unsigned int wHeight = 850;
 	const char wTitle[] = "Rubik's Cube Simulator";
 	window = glfwCreateWindow(wWidth, wHeight, wTitle, NULL, NULL);
 
@@ -380,12 +380,11 @@ int main(void)
 
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, GL_TRUE);
-
-		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glViewport(820, -70, 400, 400);
 		glUseProgram(basicShader);
-
 		//renderovanje
 		//centri
 		RenderCube(uPosLoc, 0, 0, VAO[0], greenCenter, 96, stride);
@@ -588,9 +587,6 @@ void RenderCube(GLint uPosLoc, GLfloat x, GLfloat y, GLuint vao, float* center, 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, centerSize / stride);
 }
 
-void RenderEverything() {
-
-}
 
 
 

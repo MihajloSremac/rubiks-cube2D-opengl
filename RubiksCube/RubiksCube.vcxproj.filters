@@ -16,7 +16,7 @@
     <Filter Include="Source Files\Shader Files">
       <UniqueIdentifier>{ec2a97bb-72b0-44ee-996d-09365058008b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\2DLogic">
+    <Filter Include="Source Files\2D">
       <UniqueIdentifier>{ce33baf4-fd89-4fc0-a5eb-d808ee1c369c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -25,7 +25,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CubeScramble.cpp">
-      <Filter>Source Files\2DLogic</Filter>
+      <Filter>Source Files\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,7 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CubeScramble.h">
-      <Filter>Source Files\2DLogic</Filter>
+      <Filter>Source Files\2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
