@@ -19,6 +19,12 @@
     <Filter Include="Source Files\2D">
       <UniqueIdentifier>{ce33baf4-fd89-4fc0-a5eb-d808ee1c369c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TextRender">
+      <UniqueIdentifier>{9c666592-3de5-4730-9dbb-49c0bb83cb93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Timer">
+      <UniqueIdentifier>{d41ef5b5-f853-44f5-9e04-9b24f6dcf52d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RubiksCube.cpp">
@@ -26,6 +32,12 @@
     </ClCompile>
     <ClCompile Include="CubeScramble.cpp">
       <Filter>Source Files\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRender.cpp">
+      <Filter>Source Files\TextRender</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -36,10 +48,22 @@
     <None Include="basic.frag">
       <Filter>Source Files\Shader Files</Filter>
     </None>
+    <None Include="text.vert">
+      <Filter>Source Files\Shader Files</Filter>
+    </None>
+    <None Include="text.frag">
+      <Filter>Source Files\Shader Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CubeScramble.h">
       <Filter>Source Files\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRender.h">
+      <Filter>Source Files\TextRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Source Files\Timer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,21 +6,33 @@
 #include <vector>
 #include <unordered_map>
 #include <functional>
+#include <map>
+#include <chrono>
+#include <thread>
+#include <iomanip>
 
 using namespace std;
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>              // Core GLM functionalities (e.g., vec3, mat4)
+#include <glm/gtc/matrix_transform.hpp> // For glm::ortho and other transformation functions
+#include <glm/gtc/type_ptr.hpp>     // For glm::value_ptr to pass matrices to shaders
 #include "CubeScramble.h"
+#include "TextRender.h"
+#include "Timer.h"
 
 
 unsigned int compileShader(GLenum type, const char* source);
 unsigned int createShader(const char* vsSource, const char* fsSource);
 void SetupCube(GLuint vao, GLuint vbo, float* data, size_t dataSize);
 void RenderCube(GLint uPosLoc, GLfloat x, GLfloat y, GLuint vao, float* center, size_t centerSize, GLuint stride);
-
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+string printTime(double elapsedTime);
+void ColorBackground(float x, float y, float width, float height, float r, float g, float b, float a);
 
+
+const float targetFrameTime = 1.0f / 60.0f;
 
 //R rotacija
 bool rKeyPressed = false;
@@ -55,39 +67,10 @@ float xcube[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.15, 0.15, 0.15,
 float ycube[] = { 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.45, 0.25, 0.1, -0.1, -0.25, -0.45 };
 
 CubeScramble cubeScramble;
+Timer timer;
 
 int main(void)
 {
-	if (!glfwInit()) {
-		cout << "Greska pri inicijalizaciji GLFW!" << endl;
-	}
-
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	GLFWwindow* window;
-	unsigned int wWidth = 1200;
-	unsigned int wHeight = 850;
-	const char wTitle[] = "Rubik's Cube Simulator";
-	window = glfwCreateWindow(wWidth, wHeight, wTitle, NULL, NULL);
-
-	if (window == NULL)
-	{
-		cout << "Prozor nije napravljen! :(\n";
-		glfwTerminate();
-		return 2;
-	}
-
-	glfwMakeContextCurrent(window);
-
-
-	if (glewInit() != GLEW_OK)
-	{
-		cout << "GLEW nije mogao da se ucita! :'(\n";
-		return 3;
-	}
-
 	//NEPOMERIVI KVADRATI - CENTRI - 6 komada
 	float greenCenter[] = {
 
@@ -288,6 +271,36 @@ int main(void)
 
 	};
 
+	if (!glfwInit()) {
+		cout << "Greska pri inicijalizaciji GLFW!" << endl;
+	}
+
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	GLFWwindow* window;
+	unsigned int wWidth = 1200;
+	unsigned int wHeight = 850;
+	const char wTitle[] = "Rubik's Cube Simulator";
+	window = glfwCreateWindow(wWidth, wHeight, wTitle, NULL, NULL);
+
+	if (window == NULL)
+	{
+		cout << "Prozor nije napravljen! :(\n";
+		glfwTerminate();
+		return 2;
+	}
+
+	glfwMakeContextCurrent(window);
+
+
+	if (glewInit() != GLEW_OK)
+	{
+		cout << "GLEW nije mogao da se ucita! :'(\n";
+		return 3;
+	}
+
 	unsigned int stride = 6 * sizeof(float);
 	int numVertices = sizeof(linesVertices) / stride;
 
@@ -373,17 +386,50 @@ int main(void)
 	unsigned int basicShader = createShader("basic.vert", "basic.frag");
 	unsigned int uPosLoc = glGetUniformLocation(basicShader, "uPos");
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	TextRender textRender("font/consolab.ttf", "text.vert", "text.frag", 29);
+	TextRender timeTextRender("font/digital-7.ttf", "text.vert", "text.frag", 150);
+
+
 	glfwSetKeyCallback(window, keyCallback);
 
+
+	scramble = cubeScramble.generateScramble(xcube, ycube);
 	while (!glfwWindowShouldClose(window)) {
+
+		// Record the start time of the frame
+		auto frameStart = std::chrono::high_resolution_clock::now();
+
 		glfwPollEvents();
 
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, GL_TRUE);
+
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glViewport(820, -70, 400, 400);
+		glViewport(0, 0, 1200, 850);
+
+		ColorBackground(830, -70, 400, 350, 0.5f, 0.5f, 0.5f, 1.0f); // Donji desni sivo
+
+		ColorBackground(0, 770, 1200, 80, 0.5f, 0.5f, 0.5f, 1.0f); //Gornji sivo
+
+		textRender.RenderText("Sremac Mihajlo RA 138/2021", 30.0f, 30.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		textRender.RenderText(scramble, 50.0f, 800.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+		timer.Update();
+
+		// Get the appropriate color for the stopwatch
+		glm::vec3 color = timer.GetTextColor();
+
+		// Render the stopwatch time with the correct color
+		std::string timerText = std::to_string(timer.GetElapsedTime()).substr(0, 4); // Limit decimal places
+		timeTextRender.RenderText(printTime(timer.GetElapsedTime()), 500.0f, 400.0f, 1.0f, color);
+
+
+		glViewport(830, -70, 400, 400);
+
 		glUseProgram(basicShader);
 		//renderovanje
 		//centri
@@ -436,6 +482,15 @@ int main(void)
 		glUseProgram(0);
 
 		glfwSwapBuffers(window);
+
+		auto frameEnd = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<float> frameDuration = frameEnd - frameStart;
+
+
+		// Sleep for the remaining time to cap the frame rate at 60 FPS
+		if (frameDuration.count() < targetFrameTime) {
+			std::this_thread::sleep_for(std::chrono::duration<float>(targetFrameTime - frameDuration.count()));
+		}
 	}
 
 	glDeleteBuffers(54, VBO);
@@ -482,6 +537,8 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 			*actionData.keyPressed = false;
 		}
 	}
+
+	timer.KeyCallback(key, action);
 }
 
 unsigned int compileShader(GLenum type, const char* source) {
@@ -587,6 +644,36 @@ void RenderCube(GLint uPosLoc, GLfloat x, GLfloat y, GLuint vao, float* center, 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, centerSize / stride);
 }
 
+string printTime(double elapsedTime) {
+	// Calculate minutes, seconds, and milliseconds
+	int minutes = static_cast<int>(elapsedTime) / 60;
+	int seconds = static_cast<int>(elapsedTime) % 60;
+	int milliseconds = static_cast<int>((elapsedTime - static_cast<int>(elapsedTime)) * 100);
+
+	// Format the output string
+	std::ostringstream timeStream;
+	if (minutes > 0) {
+		// If minutes > 0, include minutes in the format
+		timeStream << minutes << ":"
+			<< std::setfill('0') << std::setw(2) << seconds << ".";
+	}
+	else {
+		// If minutes == 0, exclude the "0:" prefix
+		timeStream << seconds << ".";
+	}
+	timeStream << std::setfill('0') << std::setw(2) << milliseconds;
+
+	return timeStream.str();
+}
+
+
+void ColorBackground(float x, float y, float width, float height, float r, float g, float b, float a) {
+	glEnable(GL_SCISSOR_TEST);
+	glScissor(x, y, width, height);
+	glClearColor(r, g, b, a);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_SCISSOR_TEST);
+}
 
 
 
