@@ -31,7 +31,6 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 string printTime(double elapsedTime);
 void ColorBackground(float x, float y, float width, float height, float r, float g, float b, float a);
 
-
 const float targetFrameTime = 1.0f / 60.0f;
 
 //R rotacija
@@ -411,8 +410,6 @@ int main(void)
 
 		glViewport(0, 0, 1200, 850);
 
-		ColorBackground(830, -70, 400, 350, 0.5f, 0.5f, 0.5f, 1.0f); // Donji desni sivo
-
 		ColorBackground(0, 770, 1200, 80, 0.5f, 0.5f, 0.5f, 1.0f); //Gornji sivo
 
 		textRender.RenderText("Sremac Mihajlo RA 138/2021", 30.0f, 30.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -427,6 +424,8 @@ int main(void)
 		std::string timerText = std::to_string(timer.GetElapsedTime()).substr(0, 4); // Limit decimal places
 		timeTextRender.RenderText(printTime(timer.GetElapsedTime()), 500.0f, 400.0f, 1.0f, color);
 
+		if (cubeScramble.isSolved(xcube, ycube, timer.IsRunning()))
+			timer.Stop();
 
 		glViewport(830, -70, 400, 400);
 
@@ -674,6 +673,4 @@ void ColorBackground(float x, float y, float width, float height, float r, float
 	glClear(GL_COLOR_BUFFER_BIT);
 	glDisable(GL_SCISSOR_TEST);
 }
-
-
 

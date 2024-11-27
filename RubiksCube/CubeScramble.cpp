@@ -4,10 +4,10 @@
 #include <unordered_map>
 #include <functional>
 
-float solvedx[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.15, 0.15, 0.15, 0.25, 0.25, 0.35, 0.35, 0.35, 0.50, 0.50, 0.50, 0.60, 0.60, 0.70, 0.70, 0.70, -0.55, -0.55, -0.55, -0.45, -0.45, -0.35, -0.35, -0.35, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1 };
-float solvedy[] = { 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.45, 0.25, 0.1, -0.1, -0.25, -0.45 };
+
 
 CubeScramble::CubeScramble() {
+
 }
 
 // Method to generate a random scramble
@@ -43,6 +43,19 @@ void CubeScramble::ResetCube(float (&xcube)[48], float (&ycube)[48]) {
 		xcube[i] = solvedx[i];
 		ycube[i] = solvedy[i];
 	}
+}
+
+bool areArraysEqual(const float* arr1, const float* arr2, size_t size) {
+	for (size_t i = 0; i < size; ++i) {
+		if (std::fabs(arr1[i] - arr2[i]) > 1e-6) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool CubeScramble::isSolved(float(&xcube)[48], float(&ycube)[48], bool isTimerRunning) {
+	return areArraysEqual(xcube, solvedx, 48) && areArraysEqual(ycube, solvedy, 48) && isTimerRunning;
 }
 
 void CubeScramble::processScramble(const string& scramble, float(&xcube)[48], float(&ycube)[48]) {

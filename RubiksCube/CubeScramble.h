@@ -13,15 +13,14 @@ class CubeScramble {
 public:
 	// Constructor
 	CubeScramble();
-
+	float solvedx[48] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.15, 0.15, 0.15, 0.25, 0.25, 0.35, 0.35, 0.35, 0.50, 0.50, 0.50, 0.60, 0.60, 0.70, 0.70, 0.70, -0.55, -0.55, -0.55, -0.45, -0.45, -0.35, -0.35, -0.35, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1 };
+	float solvedy[48] = { 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.1, 0.0, -0.1, 0.1, -0.1, 0.1, 0.0, -0.1, 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.45, 0.25, 0.1, -0.1, -0.25, -0.45 };
 	// Method to generate a scramble
 	string generateScramble(float(&xcube)[48], float(&ycube)[48]);
-
-	// Method to process the scramble and call corresponding UpdateValue methods
 	void processScramble(const string& scramble, float(&xcube)[48], float(&ycube)[48]);
-
 	void ResetCube(float(&xcube)[48], float(&ycube)[48]);
-	// Helper methods for each move (e.g., UpdateValueR, UpdateValueU)
+	bool isSolved(float(&xcube)[48], float(&ycube)[48], bool isTimerRunning);
+
 	void updateValueR(float& x, float& y);
 	void updateValueRPrime(float& x, float& y);
 	void updateValueU(float& x, float& y);
