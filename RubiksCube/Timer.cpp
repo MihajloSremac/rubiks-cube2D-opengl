@@ -1,8 +1,8 @@
 #include "Timer.h"
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp> // For glm::ortho and other transformation functions
-#include <glm/gtc/type_ptr.hpp>     // For glm::value_ptr to pass matrices to shaders
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 Timer::Timer()
     : stopwatchRunning(false), spacePressed(false), holdingForReset(false),

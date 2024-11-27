@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CubeScramble.cpp" />
+    <ClCompile Include="Load2D.cpp" />
     <ClCompile Include="RubiksCube.cpp" />
     <ClCompile Include="TextRender.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -142,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CubeScramble.h" />
+    <ClInclude Include="Load2D.h" />
     <ClInclude Include="TextRender.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
