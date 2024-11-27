@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Timer">
       <UniqueIdentifier>{d41ef5b5-f853-44f5-9e04-9b24f6dcf52d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\LoadLogic">
+      <UniqueIdentifier>{a2988c81-1c4c-4fe5-b454-0d9b2e23e93f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RubiksCube.cpp">
@@ -38,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Load2D.cpp">
+      <Filter>Source Files\LoadLogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Source Files\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Load2D.h">
+      <Filter>Source Files\LoadLogic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

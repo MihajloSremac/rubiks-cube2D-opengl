@@ -21,45 +21,16 @@ using namespace std;
 #include "CubeScramble.h"
 #include "TextRender.h"
 #include "Timer.h"
+#include "Load2D.h"
 
 
 unsigned int compileShader(GLenum type, const char* source);
 unsigned int createShader(const char* vsSource, const char* fsSource);
-void SetupCube(GLuint vao, GLuint vbo, float* data, size_t dataSize);
-void RenderCube(GLint uPosLoc, GLfloat x, GLfloat y, GLuint vao, float* center, size_t centerSize, GLuint stride);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 string printTime(double elapsedTime);
 void ColorBackground(float x, float y, float width, float height, float r, float g, float b, float a);
 
 const float targetFrameTime = 1.0f / 60.0f;
-
-//R rotacija
-bool rKeyPressed = false;
-bool tKeyPressed = false;
-
-//U rotacija
-bool uKeyPressed = false;
-bool iKeyPressed = false;
-
-//L rotacija
-bool lKeyPressed = false;
-bool semiColonKeyPressed = false;
-
-//F rotacija
-bool fKeyPressed = false;
-bool gKeyPressed = false;
-
-//D rotacija
-bool dKeyPressed = false;
-bool sKeyPressed = false;
-
-//B rotacija
-bool bKeyPressed = false;
-bool nKeyPressed = false;
-
-bool backspacePressed = false;
-bool scramblePressed = false;
-
 string scramble = "";
 
 float xcube[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.15, 0.15, 0.15, 0.25, 0.25, 0.35, 0.35, 0.35, 0.50, 0.50, 0.50, 0.60, 0.60, 0.70, 0.70, 0.70, -0.55, -0.55, -0.55, -0.45, -0.45, -0.35, -0.35, -0.35, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1 };
@@ -67,209 +38,10 @@ float ycube[] = { 0.45, 0.35, 0.25, 0.1, 0.0, -0.1, -0.25, -0.35, -0.45, 0.1, 0.
 
 CubeScramble cubeScramble;
 Timer timer;
+Load2D load2D;
 
 int main(void)
 {
-	//NEPOMERIVI KVADRATI - CENTRI - 6 komada
-	float greenCenter[] = {
-
-		-0.225, 0.05,      0.0, 1.0, 0.0, 1.0,
-		-0.225, -0.05,       0.0, 1.0, 0.0, 1.0,
-		-0.125, 0.05,       0.0, 1.0, 0.0, 1.0,
-		-0.125, -0.05,        0.0, 1.0, 0.0, 1.0,
-
-	};
-
-	float orangeCenter[] = {
-		-0.575, 0.05,       1.0, 0.5, 0.0, 1.0,
-		-0.575, -0.05,       1.0, 0.5, 0.0, 1.0,
-		-0.475, 0.05,	     1.0, 0.5, 0.0, 1.0,
-		-0.475, -0.05,        1.0, 0.5, 0.0, 1.0,
-	};
-
-	float redCenter[] = {
-		0.125, 0.05,       1.0, 0.0, 0.0, 1.0,
-		0.125, -0.05,       1.0, 0.0, 0.0, 1.0,
-		0.225, 0.05,	     1.0, 0.0, 0.0, 1.0,
-		0.225, -0.05,        1.0, 0.0, 0.0, 1.0,
-	};
-
-	float blueCenter[] = {
-		0.475, 0.05,       0.0, 0.0, 1.0, 1.0,
-		0.475, -0.05,       0.0, 0.0, 1.0, 1.0,
-		0.575, 0.05,	     0.0, 0.0, 1.0, 1.0,
-		0.575, -0.05,        0.0, 0.0, 1.0, 1.0,
-	};
-
-	float whiteCenter[] = {
-		-0.225, 0.4,       1.0, 1.0, 1.0, 1.0,
-		-0.225, 0.3,       1.0, 1.0, 1.0, 1.0,
-		-0.125, 0.4,	     1.0, 1.0, 1.0, 1.0,
-		-0.125, 0.3,        1.0, 1.0, 1.0, 1.0,
-	};
-
-	float yellowCenter[] = {
-		-0.225, -0.4,       1.0, 1.0, 0.0, 1.0,
-		-0.225, -0.3,       1.0, 1.0, 0.0, 1.0,
-		-0.125, -0.4,	     1.0, 1.0, 0.0, 1.0,
-		-0.125, -0.3,        1.0, 1.0, 0.0, 1.0,
-	};
-
-	//POMERIVI KVADRATI
-	//Svaki kvadrat je jedinstven i imace svoje neke kordinate sa xcubeBroj i ycubeBroj od 1-54
-	float cubeRow11121White[] = {
-		-0.125, 0.05,       1.0, 1.0, 1.0, 1.0,
-		-0.125, -0.05,       1.0, 1.0, 1.0, 1.0,
-		-0.025, 0.05,	     1.0, 1.0, 1.0, 1.0,
-		-0.025, -0.05,        1.0, 1.0, 1.0, 1.0,
-	};
-
-	float cubeRow11121Green[] = {
-		-0.125, 0.05,       0.0, 1.0, 0.0, 1.0,
-		-0.125, -0.05,       0.0, 1.0, 0.0, 1.0,
-		-0.025, 0.05,	     0.0, 1.0, 0.0, 1.0,
-		-0.025, -0.05,        0.0, 1.0, 0.0, 1.0,
-	};
-
-	float cubeRow11121Yellow[] = {
-		-0.125, 0.05,       1.0, 1.0, 0.0, 1.0,
-		-0.125, -0.05,       1.0, 1.0, 0.0, 1.0,
-		-0.025, 0.05,	     1.0, 1.0, 0.0, 1.0,
-		-0.025, -0.05,        1.0, 1.0, 0.0, 1.0,
-	};
-
-	float cubeRow234Red[] = {
-		-0.125, 0.05,       1.0, 0.0, 0.0, 1.0,
-		-0.125, -0.05,       1.0, 0.0, 0.0, 1.0,
-		-0.025, 0.05,	     1.0, 0.0, 0.0, 1.0,
-		-0.025, -0.05,        1.0, 0.0, 0.0, 1.0,
-	};
-
-	float cubeRow567Blue[] = {
-		-0.125, 0.05,       0.0, 0.0, 1.0, 1.0,
-		-0.125, -0.05,       0.0, 0.0, 1.0, 1.0,
-		-0.025, 0.05,	     0.0, 0.0, 1.0, 1.0,
-		-0.025, -0.05,        0.0, 0.0, 1.0, 1.0,
-	};
-
-	float cubeRow8910Orange[] = {
-		-0.125, 0.05,       1.0, 0.5, 0.0, 1.0,
-		-0.125, -0.05,       1.0, 0.5, 0.0, 1.0,
-		-0.025, 0.05,	     1.0, 0.5, 0.0, 1.0,
-		-0.025, -0.05,        1.0, 0.5, 0.0, 1.0,
-	};
-
-	float linesVertices[] = {
-		-0.32, 0.5,       0.2, 0.2, 0.2, 1.0,
-		-0.32, 0.2,       0.2, 0.2, 0.2, 1.0,
-		-0.22, 0.5,       0.2, 0.2, 0.2, 1.0,
-		-0.22, 0.2,       0.2, 0.2, 0.2, 1.0,
-		-0.12, 0.5,       0.2, 0.2, 0.2, 1.0,
-		-0.12, 0.2,       0.2, 0.2, 0.2, 1.0,
-		-0.02, 0.5,       0.2, 0.2, 0.2, 1.0,
-		-0.02, 0.2,       0.2, 0.2, 0.2, 1.0,
-
-		-0.32, 0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.32, -0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.22, 0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.22, -0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.12, 0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.12, -0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.02, 0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.02, -0.15,       0.2, 0.2, 0.2, 1.0,
-
-		-0.32, -0.2,       0.2, 0.2, 0.2, 1.0,
-		-0.32, -0.5,       0.2, 0.2, 0.2, 1.0,
-		-0.22, -0.2,       0.2, 0.2, 0.2, 1.0,
-		-0.22, -0.5,       0.2, 0.2, 0.2, 1.0,
-		-0.12, -0.2,       0.2, 0.2, 0.2, 1.0,
-		-0.12, -0.5,       0.2, 0.2, 0.2, 1.0,
-		-0.02, -0.2,       0.2, 0.2, 0.2, 1.0,
-		-0.02, -0.5,       0.2, 0.2, 0.2, 1.0,
-
-		-0.67, 0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.67, -0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.57, 0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.57, -0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.47, 0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.47, -0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.37, 0.15,       0.2, 0.2, 0.2, 1.0,
-		-0.37, -0.15,       0.2, 0.2, 0.2, 1.0,
-
-		0.03, 0.15,       0.2, 0.2, 0.2, 1.0,
-		0.03, -0.15,       0.2, 0.2, 0.2, 1.0,
-		0.13, 0.15,       0.2, 0.2, 0.2, 1.0,
-		0.13, -0.15,       0.2, 0.2, 0.2, 1.0,
-		0.23, 0.15,       0.2, 0.2, 0.2, 1.0,
-		0.23, -0.15,       0.2, 0.2, 0.2, 1.0,
-		0.33, 0.15,       0.2, 0.2, 0.2, 1.0,
-		0.33, -0.15,       0.2, 0.2, 0.2, 1.0,
-
-		0.38, 0.15,       0.2, 0.2, 0.2, 1.0,
-		0.38, -0.15,       0.2, 0.2, 0.2, 1.0,
-		0.48, 0.15,       0.2, 0.2, 0.2, 1.0,
-		0.48, -0.15,       0.2, 0.2, 0.2, 1.0,
-		0.58, 0.15,       0.2, 0.2, 0.2, 1.0,
-		0.58, -0.15,       0.2, 0.2, 0.2, 1.0,
-		0.67, 0.15,       0.2, 0.2, 0.2, 1.0,
-		0.67, -0.15,       0.2, 0.2, 0.2, 1.0,
-
-		-0.32, 0.495,       0.2, 0.2, 0.2, 1.0,
-		-0.02, 0.495,       0.2, 0.2, 0.2, 1.0,
-		-0.32, 0.4,       0.2, 0.2, 0.2, 1.0,
-		-0.02, 0.4,       0.2, 0.2, 0.2, 1.0,
-		-0.32, 0.304,       0.2, 0.2, 0.2, 1.0,
-		-0.02, 0.304,       0.2, 0.2, 0.2, 1.0,
-		-0.32, 0.205,       0.2, 0.2, 0.2, 1.0,
-		-0.02, 0.205,       0.2, 0.2, 0.2, 1.0,
-
-		-0.32, 0.147,       0.2, 0.2, 0.2, 1.0,
-		-0.02, 0.147,       0.2, 0.2, 0.2, 1.0,
-		-0.32, 0.052,       0.2, 0.2, 0.2, 1.0,
-		-0.02, 0.052,       0.2, 0.2, 0.2, 1.0,
-		-0.32, -0.05,       0.2, 0.2, 0.2, 1.0,
-		-0.02, -0.05,       0.2, 0.2, 0.2, 1.0,
-		-0.32, -0.147,       0.2, 0.2, 0.2, 1.0,
-		-0.02, -0.147,       0.2, 0.2, 0.2, 1.0,
-
-		-0.32, -0.205,       0.2, 0.2, 0.2, 1.0,
-		-0.02, -0.205,       0.2, 0.2, 0.2, 1.0,
-		-0.32, -0.304,       0.2, 0.2, 0.2, 1.0,
-		-0.02, -0.304,       0.2, 0.2, 0.2, 1.0,
-		-0.32, -0.4,       0.2, 0.2, 0.2, 1.0,
-		-0.02, -0.4,       0.2, 0.2, 0.2, 1.0,
-		-0.32, -0.495,       0.2, 0.2, 0.2, 1.0,
-		-0.02, -0.495,       0.2, 0.2, 0.2, 1.0,
-
-		-0.67, 0.147,       0.2, 0.2, 0.2, 1.0,
-		-0.37, 0.147,       0.2, 0.2, 0.2, 1.0,
-		-0.67, 0.052,       0.2, 0.2, 0.2, 1.0,
-		-0.37, 0.052,       0.2, 0.2, 0.2, 1.0,
-		-0.67, -0.05,       0.2, 0.2, 0.2, 1.0,
-		-0.37, -0.05,       0.2, 0.2, 0.2, 1.0,
-		-0.67, -0.147,       0.2, 0.2, 0.2, 1.0,
-		-0.37, -0.147,       0.2, 0.2, 0.2, 1.0,
-
-		0.03, 0.147,       0.2, 0.2, 0.2, 1.0,
-		0.33, 0.147,       0.2, 0.2, 0.2, 1.0,
-		0.03, 0.052,       0.2, 0.2, 0.2, 1.0,
-		0.33, 0.052,       0.2, 0.2, 0.2, 1.0,
-		0.03, -0.05,       0.2, 0.2, 0.2, 1.0,
-		0.33, -0.05,       0.2, 0.2, 0.2, 1.0,
-		0.03, -0.147,      0.2, 0.2, 0.2, 1.0,
-		0.33, -0.147,      0.2, 0.2, 0.2, 1.0,
-
-		0.38, 0.147,        0.2, 0.2, 0.2, 1.0,
-		0.67, 0.147,		0.2, 0.2, 0.2, 1.0,
-		0.38, 0.052,		0.2, 0.2, 0.2, 1.0,
-		0.67, 0.052,		0.2, 0.2, 0.2, 1.0,
-		0.38, -0.05,		0.2, 0.2, 0.2, 1.0,
-		0.67, -0.05,		0.2, 0.2, 0.2, 1.0,
-		0.38, -0.147,		0.2, 0.2, 0.2, 1.0,
-		0.67, -0.147,		0.2, 0.2, 0.2, 1.0,
-
-	};
-
 	if (!glfwInit()) {
 		cout << "Greska pri inicijalizaciji GLFW!" << endl;
 	}
@@ -300,9 +72,6 @@ int main(void)
 		return 3;
 	}
 
-	unsigned int stride = 6 * sizeof(float);
-	int numVertices = sizeof(linesVertices) / stride;
-
 	//generisanja
 	unsigned int VAO[55];
 	glGenVertexArrays(55, VAO);
@@ -310,77 +79,7 @@ int main(void)
 	unsigned int VBO[55];
 	glGenBuffers(55, VBO);
 
-
-	//bindovanja
-		//centri
-	{
-		SetupCube(VAO[0], VBO[0], greenCenter, 96);
-		SetupCube(VAO[1], VBO[1], orangeCenter, 96);
-		SetupCube(VAO[2], VBO[2], redCenter, 96);
-		SetupCube(VAO[3], VBO[3], blueCenter, 96);
-		SetupCube(VAO[4], VBO[4], whiteCenter, 96);
-		SetupCube(VAO[5], VBO[5], yellowCenter, 96);
-		SetupCube(VAO[6], VBO[6], cubeRow11121White, 96);
-		SetupCube(VAO[7], VBO[7], cubeRow11121White, 96);
-		SetupCube(VAO[8], VBO[8], cubeRow11121White, 96);
-		SetupCube(VAO[9], VBO[9], cubeRow11121Green, 96);
-		SetupCube(VAO[10], VBO[10], cubeRow11121Green, 96);
-		SetupCube(VAO[11], VBO[11], cubeRow11121Green, 96);
-		SetupCube(VAO[12], VBO[12], cubeRow11121Yellow, 96);
-		SetupCube(VAO[13], VBO[13], cubeRow11121Yellow, 96);
-		SetupCube(VAO[14], VBO[14], cubeRow11121Yellow, 96);
-		SetupCube(VAO[15], VBO[15], cubeRow234Red, 96);
-		SetupCube(VAO[16], VBO[16], cubeRow234Red, 96);
-		SetupCube(VAO[17], VBO[17], cubeRow234Red, 96);
-		SetupCube(VAO[18], VBO[18], cubeRow234Red, 96);
-		SetupCube(VAO[19], VBO[19], cubeRow234Red, 96);
-		SetupCube(VAO[20], VBO[20], cubeRow234Red, 96);
-		SetupCube(VAO[21], VBO[21], cubeRow234Red, 96);
-		SetupCube(VAO[22], VBO[22], cubeRow234Red, 96);
-		SetupCube(VAO[23], VBO[23], cubeRow567Blue, 96);
-		SetupCube(VAO[24], VBO[24], cubeRow567Blue, 96);
-		SetupCube(VAO[25], VBO[25], cubeRow567Blue, 96);
-		SetupCube(VAO[26], VBO[26], cubeRow567Blue, 96);
-		SetupCube(VAO[27], VBO[27], cubeRow567Blue, 96);
-		SetupCube(VAO[28], VBO[28], cubeRow567Blue, 96);
-		SetupCube(VAO[29], VBO[29], cubeRow567Blue, 96);
-		SetupCube(VAO[30], VBO[30], cubeRow567Blue, 96);
-		SetupCube(VAO[31], VBO[31], cubeRow8910Orange, 96);
-		SetupCube(VAO[32], VBO[32], cubeRow8910Orange, 96);
-		SetupCube(VAO[33], VBO[33], cubeRow8910Orange, 96);
-		SetupCube(VAO[34], VBO[34], cubeRow8910Orange, 96);
-		SetupCube(VAO[35], VBO[35], cubeRow8910Orange, 96);
-		SetupCube(VAO[36], VBO[36], cubeRow8910Orange, 96);
-		SetupCube(VAO[37], VBO[37], cubeRow8910Orange, 96);
-		SetupCube(VAO[38], VBO[38], cubeRow8910Orange, 96);
-		SetupCube(VAO[39], VBO[39], cubeRow11121White, 96);
-		SetupCube(VAO[40], VBO[40], cubeRow11121White, 96);
-		SetupCube(VAO[41], VBO[41], cubeRow11121White, 96);
-		SetupCube(VAO[42], VBO[42], cubeRow11121Green, 96);
-		SetupCube(VAO[43], VBO[43], cubeRow11121Green, 96);
-		SetupCube(VAO[44], VBO[44], cubeRow11121Green, 96);
-		SetupCube(VAO[45], VBO[45], cubeRow11121Yellow, 96);
-		SetupCube(VAO[46], VBO[46], cubeRow11121Yellow, 96);
-		SetupCube(VAO[47], VBO[47], cubeRow11121Yellow, 96);
-		SetupCube(VAO[48], VBO[48], cubeRow11121White, 96);
-		SetupCube(VAO[49], VBO[49], cubeRow11121White, 96);
-		SetupCube(VAO[50], VBO[50], cubeRow11121Green, 96);
-		SetupCube(VAO[51], VBO[51], cubeRow11121Green, 96);
-		SetupCube(VAO[52], VBO[52], cubeRow11121Yellow, 96);
-		SetupCube(VAO[53], VBO[53], cubeRow11121Yellow, 96);
-	}
-
-	glBindVertexArray(VAO[54]);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[54]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(linesVertices), linesVertices, GL_STATIC_DRAW);
-
-	// Postavljanje atributa za pozicije
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// Postavljanje atributa za boje
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(2 * sizeof(float)));
-	glEnableVertexAttribArray(1);
+	load2D.SetupAllCubes(VAO, VBO, xcube, ycube);
 
 	unsigned int basicShader = createShader("basic.vert", "basic.frag");
 	unsigned int uPosLoc = glGetUniformLocation(basicShader, "uPos");
@@ -397,7 +96,6 @@ int main(void)
 	scramble = cubeScramble.generateScramble(xcube, ycube);
 	while (!glfwWindowShouldClose(window)) {
 
-		// Record the start time of the frame
 		auto frameStart = std::chrono::high_resolution_clock::now();
 
 		glfwPollEvents();
@@ -409,91 +107,37 @@ int main(void)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glViewport(0, 0, 1200, 850);
-
-		ColorBackground(0, 770, 1200, 80, 0.5f, 0.5f, 0.5f, 1.0f); //Gornji sivo
-
+		ColorBackground(0, 770, 1200, 80, 0.5f, 0.5f, 0.5f, 1.0f);
+		//tekst
 		textRender.RenderText("Sremac Mihajlo RA 138/2021", 30.0f, 30.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 		textRender.RenderText(scramble, 50.0f, 800.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-
 		timer.Update();
-
-		// Get the appropriate color for the stopwatch
 		glm::vec3 color = timer.GetTextColor();
-
-		// Render the stopwatch time with the correct color
-		std::string timerText = std::to_string(timer.GetElapsedTime()).substr(0, 4); // Limit decimal places
+		std::string timerText = std::to_string(timer.GetElapsedTime()).substr(0, 4);
 		timeTextRender.RenderText(printTime(timer.GetElapsedTime()), 500.0f, 400.0f, 1.0f, color);
 
 		if (cubeScramble.isSolved(xcube, ycube, timer.IsRunning()))
 			timer.Stop();
 
 		glViewport(830, -70, 400, 400);
-
-		glUseProgram(basicShader);
-		//renderovanje
-		//centri
-		RenderCube(uPosLoc, 0, 0, VAO[0], greenCenter, 96, stride);
-		RenderCube(uPosLoc, 0, 0, VAO[1], orangeCenter, 96, stride);
-		RenderCube(uPosLoc, 0, 0, VAO[2], redCenter, 96, stride);
-		RenderCube(uPosLoc, 0, 0, VAO[3], blueCenter, 96, stride);
-		RenderCube(uPosLoc, 0, 0, VAO[4], whiteCenter, 96, stride);
-		RenderCube(uPosLoc, 0, 0, VAO[5], yellowCenter, 96, stride);
-
-		//pokretljive stranice
-		for (int i = 0; i < 9; ++i) {
-			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121White, 96, stride);
-		}
-
-		for (int i = 9; i < 15; ++i) {
-			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121Green, 96, stride);
-		}
-
-		for (int i = 15; i < 21; ++i) {
-			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121Yellow, 96, stride);
-		}
-
-		for (int i = 21; i < 28; ++i) {
-			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow234Red, 96, stride);
-		}
-
-		for (int i = 28; i < 35; ++i) {
-			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow567Blue, 96, stride);
-		}
-
-		for (int i = 35; i < 42; ++i) {
-			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow8910Orange, 96, stride);
-		}
-
-		for (int i = 42; i < 48; ++i) {
-			RenderCube(uPosLoc, xcube[i], ycube[i], VAO[i + 6], cubeRow11121White, 96, stride);
-		}
-
-		//linije
-		glUniform2f(uPosLoc, 0, 0);
-		glBindVertexArray(VAO[54]);
-		glLineWidth(3.0);
-		for (int i = 0; i < numVertices; i += 2) {
-			glDrawArrays(GL_LINE_LOOP, i, 2);
-		}
-		glLineWidth(1.0);
+		glUseProgram(basicShader);	
+		//renderovanje 2D kockica
+		load2D.RenderAllCubes(VAO, VBO, xcube, ycube, uPosLoc);
 
 		glBindVertexArray(0);
 		glUseProgram(0);
-
 		glfwSwapBuffers(window);
 
+		//60FPS 
 		auto frameEnd = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<float> frameDuration = frameEnd - frameStart;
-
-
-		// Sleep for the remaining time to cap the frame rate at 60 FPS
 		if (frameDuration.count() < targetFrameTime) {
 			std::this_thread::sleep_for(std::chrono::duration<float>(targetFrameTime - frameDuration.count()));
 		}
 	}
 
-	glDeleteBuffers(54, VBO);
-	glDeleteVertexArrays(54, VAO);
+	glDeleteBuffers(55, VBO);
+	glDeleteVertexArrays(55, VAO);
 	glDeleteProgram(basicShader);
 
 	glfwTerminate();
@@ -507,22 +151,21 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		std::function<void()> onRelease;
 	};
 	static std::unordered_map<int, KeyAction> keyActions = {
-		{GLFW_KEY_R, {&rKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueR(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_U, {&uKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueU(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_T, {&tKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueRPrime(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_I, {&iKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueUPrime(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_L, {&lKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueL(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_SEMICOLON, {&semiColonKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueLPrime(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_F, {&fKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueF(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_G, {&gKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueFPrime(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_D, {&dKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueD(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_S, {&sKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueDPrime(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_B, {&bKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueB(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_N, {&nKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueBPrime(xcube[i], ycube[i]); }}},
-		{GLFW_KEY_BACKSPACE, {&backspacePressed, []() { cubeScramble.ResetCube(xcube, ycube); }}},
-		{GLFW_KEY_LEFT_SHIFT, {&scramblePressed, []() {
+		{GLFW_KEY_R, {&cubeScramble.rKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueR(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_U, {&cubeScramble.uKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueU(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_T, {&cubeScramble.tKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueRPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_I, {&cubeScramble.iKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueUPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_L, {&cubeScramble.lKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueL(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_SEMICOLON, {&cubeScramble.semiColonKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueLPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_F, {&cubeScramble.fKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueF(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_G, {&cubeScramble.gKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueFPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_D, {&cubeScramble.dKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueD(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_S, {&cubeScramble.sKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueDPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_B, {&cubeScramble.bKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueB(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_N, {&cubeScramble.nKeyPressed, []() { for (int i = 0; i < 48; i++) cubeScramble.updateValueBPrime(xcube[i], ycube[i]); }}},
+		{GLFW_KEY_BACKSPACE, {&cubeScramble.backspacePressed, []() { cubeScramble.ResetCube(xcube, ycube); }}},
+		{GLFW_KEY_LEFT_SHIFT, {&cubeScramble.scramblePressed, []() {
 			scramble = cubeScramble.generateScramble(xcube, ycube);
-			cout << scramble << endl;
 		}}},
 	};
 
@@ -618,31 +261,6 @@ unsigned int createShader(const char* vsSource, const char* fsSource)
 	return program;
 }
 
-void SetupCube(GLuint vao, GLuint vbo, float* data, size_t dataSize) {
-	glBindVertexArray(vao);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
-
-	// Postavljanje atributa za pozicije
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// Postavljanje atributa za boje
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(2 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-}
-
-void RenderCube(GLint uPosLoc, GLfloat x, GLfloat y, GLuint vao, float* center, size_t centerSize, GLuint stride) {
-	// Postavite poziciju kroz uniform
-	glUniform2f(uPosLoc, x, y);
-
-	// Povežite odgovarajući VAO
-	glBindVertexArray(vao);
-
-	// Nacrtajte objekat koristeći glDrawArrays
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, centerSize / stride);
-}
-
 string printTime(double elapsedTime) {
 	// Calculate minutes, seconds, and milliseconds
 	int minutes = static_cast<int>(elapsedTime) / 60;
@@ -664,7 +282,6 @@ string printTime(double elapsedTime) {
 
 	return timeStream.str();
 }
-
 
 void ColorBackground(float x, float y, float width, float height, float r, float g, float b, float a) {
 	glEnable(GL_SCISSOR_TEST);
