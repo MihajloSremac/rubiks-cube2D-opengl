@@ -3,3 +3,4 @@ C:\Users\mihaj\OneDrive\Documents\Fakultet\7_semestar\RG\Projekat\18Nov_2\rubiks
 D:\4.godina\RG\Projekat\2D_15Nov\rubiks-cube-opengl\RubiksCube\x64\Debug\glew32.dll
 C:\Users\mihaj\OneDrive\Documents\Fakultet\7_semestar\RG\Projekat\2Drefactor\rubiks-cube-opengl\RubiksCube\x64\Debug\glew32.dll
 D:\4.godina\RG\Projekat\TextRendering23nov\rubiks-cube-opengl\RubiksCube\x64\Debug\glew32.dll
+D:\4.godina\RG\Projekat\ScreenSizeFix\rubiks-cube-opengl\RubiksCube\x64\Debug\glew32.dll

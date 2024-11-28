@@ -29,6 +29,7 @@ unsigned int createShader(const char* vsSource, const char* fsSource);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 string printTime(double elapsedTime);
 void ColorBackground(float x, float y, float width, float height, float r, float g, float b, float a);
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 const float targetFrameTime = 1.0f / 60.0f;
 string scramble = "";
@@ -64,8 +65,8 @@ int main(void)
 	}
 
 	glfwMakeContextCurrent(window);
-
-
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetKeyCallback(window, keyCallback);
 	if (glewInit() != GLEW_OK)
 	{
 		cout << "GLEW nije mogao da se ucita! :'(\n";
@@ -89,12 +90,11 @@ int main(void)
 	TextRender textRender("font/consolab.ttf", "text.vert", "text.frag", 29);
 	TextRender timeTextRender("font/digital-7.ttf", "text.vert", "text.frag", 150);
 
-
-	glfwSetKeyCallback(window, keyCallback);
-
-
 	scramble = cubeScramble.generateScramble(xcube, ycube);
 	while (!glfwWindowShouldClose(window)) {
+
+		int windowWidth, windowHeight;
+		glfwGetFramebufferSize(window, &windowWidth, &windowHeight);
 
 		auto frameStart = std::chrono::high_resolution_clock::now();
 
@@ -106,8 +106,8 @@ int main(void)
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glViewport(0, 0, 1200, 850);
-		ColorBackground(0, 770, 1200, 80, 0.5f, 0.5f, 0.5f, 1.0f);
+		glViewport(0, 0, windowWidth, windowHeight);
+		//ColorBackground(0, 770, 1200, 80, 0.5f, 0.5f, 0.5f, 1.0f);
 		//tekst
 		textRender.RenderText("Sremac Mihajlo RA 138/2021", 30.0f, 30.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 		textRender.RenderText(scramble, 50.0f, 800.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -119,7 +119,7 @@ int main(void)
 		if (cubeScramble.isSolved(xcube, ycube, timer.IsRunning()))
 			timer.Stop();
 
-		glViewport(830, -70, 400, 400);
+		glViewport(0.64 * windowWidth, -0.09 * windowHeight, 0.41 * windowWidth, 0.50 * windowHeight);
 		glUseProgram(basicShader);	
 		//renderovanje 2D kockica
 		load2D.RenderAllCubes(VAO, VBO, xcube, ycube, uPosLoc);
@@ -289,5 +289,9 @@ void ColorBackground(float x, float y, float width, float height, float r, float
 	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glDisable(GL_SCISSOR_TEST);
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+	glViewport(0, 0, width, height);
 }
 
