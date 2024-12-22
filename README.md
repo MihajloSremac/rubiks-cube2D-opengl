@@ -1,2 +1,3 @@
 # rubiks-cube-opengl
-Usable Rubik's Cube in OpenGl
+Usable 2D Rubik's Cube in OpenGl(timer)
+
